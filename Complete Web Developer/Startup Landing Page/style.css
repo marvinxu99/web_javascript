@@ -1,0 +1,41 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+}
+
+.container1 {
+	display: flex; 
+	flex-direction: column;
+	background-image: url("header.jpg");
+	background-position: center;
+	width: 100%;
+	height: 100%;
+	
+}
+
+img {
+	width: 800px;
+	height: 600px;
+	margin: 10px;
+	transition: all 1s;     /* https://thoughtbot.com/blog/transitions-and-transforms */
+}
+
+.BiggestEvent {
+	color: red;
+	position: relative; 
+	top: 25%; 
+	text-align: center;
+}
+
+.FindOutMore {
+	position: relative; 
+	top: 65%; 
+	text-align: center;
+	
+}

@@ -1,0 +1,4 @@
+(1) Run PowerShell as Administrator
+(2) set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+(3) npm install -g npm-windows-upgrade
+(4) npm-windows-upgrade

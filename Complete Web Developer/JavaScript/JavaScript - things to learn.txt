@@ -1,0 +1,77 @@
+JAVASCRIPT TYPES
+1. Number
+2. String
+3. Boolean
+4. Undefined  -- if var is not assigned 
+5. Null
+6. Symbol (new in ECMA Script 6)
+7. Object
+
+JAVASCRIPT COMPARISONS
+!==
+===
+>=
+<=
+>
+<
+
+JAVASCRIPT VARIABLES
+var
+let (new in ECMA Script 6)
+const (new in ECMA Script 6)
+
+var first = prompt("What is your first number?");
+var second = prompt("What is your second number?");
+var sum = Number(first) + Number(second);
+
+alert();
+console.log();
+
+JAVASCRIPT CONDITIONALS
+if 
+else
+else if
+ternary operator
+switch
+
+JAVASCRIPT LOGICAL OPERATORS
+&&
+||
+!
+
+JAVASCRIPT FUNCTION
+
+DATA STRUCTURE: Array
+list = ['cat', 'bear', 'bird', 'tiger'];
+list.shift()
+list.pop()
+list.push('elephant');
+list.concat("bee', "deer');
+list.sort();
+/* W3C 
+
+DATA STRUCTURE: Object
+Object is a collection of properties.
+
+JAVASCRIPT TERMINOLOGY
+ //function declaration
+ //function expression
+ //expression    var a = 2;   , return true,
+ //Calling or invoke a function
+ //function vs method
+
+JAVASCRIPT LOOP
+for
+while
+do { } while 
+foreach       // introduced in ES 5
+
+/** caniuse.com  */
+
+JAVASCRIPT KEYWORDS
+
+
+
+
+
+

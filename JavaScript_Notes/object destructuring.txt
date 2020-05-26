@@ -1,0 +1,44 @@
+Object Destructuring
+
+Object destructuring is a way to extract values from a data collection (object, array, etc.), without having to iterate over the data or access its keys explicitly:
+
+old way
+function animalParty(dogSound, catSound) {}
+
+const myDict = {
+  dog: 'woof',
+  cat: 'meow',
+};
+
+animalParty(myDict.dog, myDict.cat);
+
+destructuring 
+
+function animalParty(dogSound, catSound) {}
+
+const myDict = {
+  dog: 'woof',
+  cat: 'meow',
+};
+
+const { dog, cat } = myDict;
+animalParty(dog, cat);
+
+But wait, there’s more. You can also define destructuring in the signature of a function:
+destructuring 2
+function animalParty({ dog, cat }) {}
+
+const myDict = {
+  dog: 'woof',
+  cat: 'meow',
+};
+
+animalParty(myDict);
+
+It also works with arrays: 
+
+destructuring 3
+[a, b] = [10, 20];
+
+console.log(a); // prints 10
+

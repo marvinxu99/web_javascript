@@ -1,0 +1,10 @@
+Template Literals (Template Strings)
+
+Strings are one of the most common programming constructs. This is why it’s so embarrassing that natively declaring strings is still poorly supported in many languages. For a long time, JS was in the “crappy string” family. But the addition of template literals put JS in a category of its own. Template literals natively and conveniently solve the two biggest problems with writing strings: adding dynamic content and writing strings that bridge multiple lines: 
+
+const name = 'Ryland';
+const helloString =
+`Hello
+ ${name}`;
+
+I think the code speaks for itself. What an amazing implementation. 

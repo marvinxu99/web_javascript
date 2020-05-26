@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<!-- saved from url=(0065)https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/ -->
+<html lang="en-US"><head data-template-path="https://hacks.mozilla.org/wp-content/themes/Hax"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style id="stndz-style">div[class*="item-container-obpd"], a[data-redirect*="paid.outbrain.com"], a[onmousedown*="paid.outbrain.com"] { display: none !important; } a div[class*="item-container-ad"] { height: 0px !important; overflow: hidden !important; position: absolute !important; } div[data-item-syndicated="true"] { display: none !important; } .grv_is_sponsored { display: none !important; } .zergnet-widget-related { display: none !important; } </style>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="google-site-verification" content="w2ocEMd5yV9IsGCjhq-7ls67r4VH-Ob6oWdiZpqjN8U">
+
+  
+  <meta name="title" content="ES modules: A cartoon deep-dive – Mozilla Hacks - the Web developer blog">
+  <meta name="description" content="ES modules bring an official, standardized module system to JavaScript. With the release of Firefox 60 in May, all major browsers will support ES modules, and there is current work ...">
+
+    <meta property="og:site_name" content="Mozilla Hacks – the Web developer blog">
+  <meta property="og:url" content="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive">
+  <meta property="og:title" content="ES modules: A cartoon deep-dive – Mozilla Hacks - the Web developer blog">
+  <meta property="og:description" content="ES modules bring an official, standardized module system to JavaScript. With the release of Firefox 60 in May, all major browsers will support ES modules, and there is current work ...">
+  <meta property="og:image" content="https://hacks.mozilla.org/files/2018/03/08_loader_as_puppeteer_2.png">
+  <meta property="og:image:width" content="3411">
+  <meta property="og:image:height" content="1835">
+
+    <meta property="twitter:title" content="ES modules: A cartoon deep-dive – Mozilla Hacks - the Web developer blog">
+  <meta property="twitter:description" content="ES modules bring an official, standardized module system to JavaScript. With the release of Firefox 60 in May, all major browsers will support ES modules, and there is current work ...">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:image" content="https://hacks.mozilla.org/files/2018/03/08_loader_as_puppeteer_2.png">
+  <meta name="twitter:site" content="@mozhacks">
+
+  <link href="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/font-awesome.min.css">
+  <link rel="stylesheet" href="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/style.css">
+  <link rel="stylesheet" href="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/solarized_light.min.css">
+
+  <script type="text/javascript" async="" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/ga.js.download"></script><script type="text/javascript">
+    window.hacks = {};
+    // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
+    var removeUtms  =   function(){
+        var l = window.location;
+        if( l.hash.indexOf( "utm" ) != -1 ){
+            var anchor = l.hash.match(/#(?!utm)[^&]+/);
+            anchor  =   anchor? anchor[0]: '';
+            if(!anchor && window.history.replaceState){
+                history.replaceState({},'', l.pathname + l.search);
+            } else {
+                l.hash = anchor;
+            }
+        };
+    };
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-35433268-8'],
+              ['_setAllowAnchor', true]);
+    _gaq.push (['_gat._anonymizeIp']);
+    _gaq.push(['_trackPageview']);
+    _gaq.push( removeUtms );
+    (function(d, k) {
+      var ga = d.createElement(k); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = 'https://ssl.google-analytics.com/ga.js';
+      var s = d.getElementsByTagName(k)[0]; s.parentNode.insertBefore(ga, s);
+    })(document, 'script');
+  </script>
+
+  <title>ES modules: A cartoon deep-dive - Mozilla Hacks - the Web developer blog</title>
+<meta name="blog-name" content="Mozilla Hacks - the Web developer blog">
+
+<!-- This site is optimized with the Yoast SEO plugin v11.6 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/">
+<script type="application/ld+json" class="yoast-schema-graph yoast-schema-graph--main">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://hacks.mozilla.org/#website","url":"https://hacks.mozilla.org/","name":"Mozilla Hacks - the Web developer blog","potentialAction":{"@type":"SearchAction","target":"https://hacks.mozilla.org/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"ImageObject","@id":"https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#primaryimage","url":"https://hacks.mozilla.org/files/2018/03/08_loader_as_puppeteer_2.png","width":3411,"height":1835},{"@type":"WebPage","@id":"https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#webpage","url":"https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/","inLanguage":"en-US","name":"ES modules: A cartoon deep-dive - Mozilla Hacks - the Web developer blog","isPartOf":{"@id":"https://hacks.mozilla.org/#website"},"primaryImageOfPage":{"@id":"https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#primaryimage"},"datePublished":"2018-03-28T15:00:17+00:00","dateModified":"2018-04-02T21:08:28+00:00","author":{"@id":"https://hacks.mozilla.org/#/schema/person/fdc22e85581e437b85a0cd908471e269"}},{"@type":["Person"],"@id":"https://hacks.mozilla.org/#/schema/person/fdc22e85581e437b85a0cd908471e269","name":"Lin Clark","image":{"@type":"ImageObject","@id":"https://hacks.mozilla.org/#authorlogo","url":"https://secure.gravatar.com/avatar/a1c30f951cdefc554d6e2d078a02468d?s=96&d=mm&r=g","caption":"Lin Clark"},"description":"Lin works in Advanced Development at Mozilla, with a focus on Rust and WebAssembly.","sameAs":["https://twitter.com/linclark"]}]}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Mozilla Hacks - the Web developer blog » Feed" href="https://hacks.mozilla.org/feed/">
+<link rel="alternate" type="application/rss+xml" title="Mozilla Hacks - the Web developer blog » Comments Feed" href="https://hacks.mozilla.org/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Mozilla Hacks - the Web developer blog » ES modules: A cartoon deep-dive Comments Feed" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/feed/">
+<link rel="stylesheet" id="wp-block-library-css" href="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/style.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-syntax-css-css" href="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/wp-syntax.css" type="text/css" media="all">
+<script type="text/javascript" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/jquery.js.download"></script>
+<script type="text/javascript" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/jquery-migrate.min.js.download"></script>
+<script type="text/javascript" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/analytics.js.download"></script>
+<script type="text/javascript" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/socialshare.min.js.download"></script>
+<link rel="https://api.w.org/" href="https://hacks.mozilla.org/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://hacks.mozilla.org/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://hacks.mozilla.org/wp-includes/wlwmanifest.xml"> 
+<link rel="shortlink" href="https://hacks.mozilla.org/?p=32062">
+<link rel="alternate" type="application/json+oembed" href="https://hacks.mozilla.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fhacks.mozilla.org%2F2018%2F03%2Fes-modules-a-cartoon-deep-dive%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://hacks.mozilla.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fhacks.mozilla.org%2F2018%2F03%2Fes-modules-a-cartoon-deep-dive%2F&amp;format=xml">
+<link rel="shortcut icon" type="image/x-icon" href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/wp-content/themes/Hax/favicon.ico"><style>#wpadminbar #wp-admin-bar-site-name>.ab-item:before { content: none !important;}li#wp-admin-bar-site-name a { background: url( "https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/wp-content/themes/Hax/favicon.ico" ) left center/20px no-repeat !important; padding-left: 21px !important; background-size: 20px !important; } li#wp-admin-bar-site-name { margin-left: 5px !important; } li#wp-admin-bar-site-name {} #wp-admin-bar-site-name div a { background: none !important; }
+</style><script src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/newsletter.js.download"></script></head>
+<body>
+  <div class="outer-wrapper">
+    <header class="section section--fullwidth header">
+      <div class="masthead row">
+        <div class="branding block block--3">
+          <h1>
+            <a href="https://hacks.mozilla.org/">
+              <img class="branding__logo" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/mdn-logo-mono.svg">
+              <img class="branding__wordmark" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/wordmark.svg" alt="Mozilla">
+              <span class="branding__title">Hac<span class="logo-askew">k</span>s</span>
+            </a>
+          </h1>
+        </div>
+        <div class="search block block--2">
+          <form class="search__form" method="get" action="https://hacks.mozilla.org/">
+            <input type="search" name="s" class="search__input" placeholder="Search Mozilla Hacks" value="">
+            <i class="fa fa-search search__badge"></i>
+          </form>
+        </div>
+        <nav class="social">
+          <a class="social__link youtube" href="http://www.youtube.com/user/mozhacks" title="YouTube"><i class="fa fa-youtube" aria-hidden="true"></i><span>Hacks on YouTube</span></a>
+          <a class="social__link twitter" href="https://twitter.com/mozhacks" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i><span>@mozhacks on Twitter</span></a>
+          <a class="social__link rss" href="https://hacks.mozilla.org/feed/" title="RSS Feed"><i class="fa fa-rss" aria-hidden="true"></i><span>Hacks RSS Feed</span></a>
+          <a class="fx-button" href="https://www.mozilla.org/firefox/download/thanks/?utm_source=hacks.mozilla.org&amp;utm_medium=referral&amp;utm_campaign=header-download-button&amp;utm_content=header-download-button">Download Firefox</a>
+        </nav>
+      </div>
+    </header>
+
+  
+<div id="content-head" class="section">
+  <h1 class="post__title">ES modules: A cartoon deep-dive</h1>
+  <div class="byline">
+    <h3 class="post__author">
+                      <img alt="" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/a1c30f951cdefc554d6e2d078a02468d.jpeg" srcset="https://secure.gravatar.com/avatar/a1c30f951cdefc554d6e2d078a02468d?s=128&amp;d=mm&amp;r=g 2x" class="avatar avatar-64 photo" height="64" width="64">        By
+                                        <a class="url" href="https://twitter.com/linclark" rel="external me">Lin Clark</a>                            </h3>
+    <div class="post__meta">
+      Posted on
+      <abbr class="published" title="2018-03-28T08:00:17-07:00">
+        March 28, 2018      </abbr>
+      <span class="entry-cat">in
+        <a href="https://hacks.mozilla.org/category/code-cartoons/" rel="category tag" title="View all posts in Code Cartoons">Code Cartoons</a>, <a href="https://hacks.mozilla.org/category/featured/" rel="category tag" title="View all posts in Featured Article">Featured Article</a>,  and <a href="https://hacks.mozilla.org/category/javascript/" rel="category tag" title="View all posts in JavaScript">JavaScript</a>      </span>
+            <div class="socialshare" data-type="bubbles"><div class="dropdown-toggle" data-toggle="socialshare">    <a class="share-button" role="button" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#share-options" aria-controls="share-options" aria-expanded="false"><span>Share This</span></a>    <div id="share-options">        <ul>            <li><div class="fb-like" data-send="false" data-layout="box_count" data-width="12" data-show-faces="false"></div></li>            <li><div class="g-plusone" data-size="tall"></div></li>            <li><a href="https://twitter.com/share" class="twitter-share-button" data-via="mozhacks" data-count="vertical" data-related="mozhacks" data-text="ES modules: A cartoon deep-dive – Mozilla Hacks - the Web developer blog" data-url="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive"></a></li>        </ul>    </div></div></div>
+    </div>
+  </div>
+</div>
+
+<main id="content-main" class="section article">
+  <article class="post" role="article">
+    <p>ES modules bring an official, standardized module system to JavaScript. It took a while to get here, though — nearly 10 years of standardization work.</p>
+<p>But the wait is almost over. With the release of Firefox 60 in May (<a href="https://www.mozilla.org/en-US/firefox/developer/" target="_blank">currently in beta</a>), all major browsers will support ES modules, and the Node modules working group is currently working on adding ES module support to <a href="https://nodejs.org/en/" target="_blank">Node.js</a>. And <a href="https://www.youtube.com/watch?v=qR_b5gajwug" target="_blank">ES module integration for WebAssembly</a> is underway as well.</p>
+<p>Many JavaScript developers know that ES modules have been controversial. But few actually understand how ES modules work.</p>
+<p>Let’s take a look at what problem ES modules solve and how they are different from modules in other module systems.</p>
+<h3>What problem do modules&nbsp;solve?</h3>
+<p>When you think about it, coding in JavaScript is all about managing variables. It’s all about assigning values to variables, or adding numbers to variables, or combining two variables together and putting them into another variable.</p>
+<p><b><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/01_variables.png" target="_blank"><img class="alignnone size-large wp-image-32063" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/01_variables-500x178.png" alt="Code showing variables being manipulated" width="500" height="178" srcset="https://hacks.mozilla.org/files/2018/03/01_variables-500x178.png 500w, https://hacks.mozilla.org/files/2018/03/01_variables-250x89.png 250w, https://hacks.mozilla.org/files/2018/03/01_variables-768x273.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></b></p>
+<p>Because so much of your code is just about changing variables, how you organize these variables is going to have a big impact on how well you can code… and how well you can maintain that code.</p>
+<p>Having just a few variables to think about at one time makes things easier. JavaScript has a way of helping you do this, called scope. Because of how scopes work in JavaScript, functions can’t access variables that are defined in other functions.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/02_module_scope_01.png" target="_blank"><img class="alignnone size-large wp-image-32064" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/02_module_scope_01-500x292.png" alt="Two function scopes with one trying to reach into another but failing" width="500" height="292" srcset="https://hacks.mozilla.org/files/2018/03/02_module_scope_01-500x292.png 500w, https://hacks.mozilla.org/files/2018/03/02_module_scope_01-250x146.png 250w, https://hacks.mozilla.org/files/2018/03/02_module_scope_01-768x448.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>This is good. It means that when you’re working on one function, you can just think about that one function. You don’t have to worry about what other functions might be doing to your variables.</p>
+<p>It also has a downside, though. It does make it hard to share variables between different functions.</p>
+<p>What if you do want to share your variable outside of a scope? A common way to handle this is to put it on a scope above you… for example, on the global scope.</p>
+<p>You probably remember this from the jQuery days. Before you could load any jQuery plug-ins, you had to make sure that jQuery was in the global scope.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/02_module_scope_02.png" target="_blank"><img class="alignnone size-large wp-image-32065" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/02_module_scope_02-500x450.png" alt="Two function scopes in a global, with one putting jQuery into the global" width="500" height="450" srcset="https://hacks.mozilla.org/files/2018/03/02_module_scope_02-500x450.png 500w, https://hacks.mozilla.org/files/2018/03/02_module_scope_02-250x225.png 250w, https://hacks.mozilla.org/files/2018/03/02_module_scope_02-768x691.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>This works, but they are some annoying problems that result.</p>
+<p>First, all of your script tags need to be in the right order. Then you have to be careful to make sure that no one messes up that order.</p>
+<p>If you do mess up that order, then in the middle of running, your app will throw an error. When the function goes looking for jQuery where it expects it — on the global — and doesn’t find it, it will throw an error and stop executing.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/02_module_scope_03.png" target="_blank"><img class="alignnone size-large wp-image-32066" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/02_module_scope_03-500x450.png" alt="The top function scope has been removed and now the second function scope can’t find jQuery on the global" width="500" height="450" srcset="https://hacks.mozilla.org/files/2018/03/02_module_scope_03-500x450.png 500w, https://hacks.mozilla.org/files/2018/03/02_module_scope_03-250x225.png 250w, https://hacks.mozilla.org/files/2018/03/02_module_scope_03-768x691.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>This makes maintaining code tricky. It makes removing old code or script tags a game of roulette. You don’t know what might break. The dependencies between these different parts of your code are implicit. Any function can grab anything on the global, so you don’t know which functions depend on which scripts.</p>
+<p>A second problem is that because these variables are on the global scope, every part of the code that’s inside of that global scope can change the variable. Malicious code can change that variable on purpose to make your code do something you didn’t mean for it to, or non-malicious code could just accidentally clobber your variable.</p>
+<h3>How do modules&nbsp;help?</h3>
+<p>Modules give you a better way to organize these variables and functions. With modules, you group the variables and functions that make sense to go together.</p>
+<p>This puts these functions and variables into a module scope. The module scope can be used to share variables between the functions in the module.</p>
+<p>But unlike function scopes, module scopes have a way of making their variables available to other modules as well. They can say explicitly which of the variables, classes, or functions in the module should be available.</p>
+<p>When something is made available to other modules, it’s called an export. Once you have an export, other modules can explicitly say that they depend on that variable, class or function.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/02_module_scope_04.png" target="_blank"><img class="alignnone size-large wp-image-32067" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/02_module_scope_04-500x450.png" alt="Two module scopes, with one reaching into the other to grab an export" width="500" height="450" srcset="https://hacks.mozilla.org/files/2018/03/02_module_scope_04-500x450.png 500w, https://hacks.mozilla.org/files/2018/03/02_module_scope_04-250x225.png 250w, https://hacks.mozilla.org/files/2018/03/02_module_scope_04-768x691.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>Because this is an explicit relationship, you can tell which modules will break if you remove another one.</p>
+<p>Once you have the ability to export and import variables between modules, it makes it a lot easier to break up your code into small chunks that can work independently of each other. Then you can combine and recombine these chunks, kind of like Lego blocks, to create all different kinds of applications from the same set of modules.</p>
+<p>Since modules are so useful, there have been multiple attempts to add module functionality to JavaScript. Today there are two module systems that are actively being used. CommonJS (CJS) is what Node.js has used historically. ESM (EcmaScript modules) is a newer system which has been added to the JavaScript specification. Browsers already support ES modules, and Node is adding support.</p>
+<p>Let’s take an in-depth look at how this new module system works.</p>
+<h3>How ES modules&nbsp;work</h3>
+<p>When you’re developing with modules, you build up a graph of dependencies. The connections between different dependencies come from any import statements that you use.</p>
+<p>These import statements are how the browser or Node knows exactly what code it needs to load. You give it a file to use as an entry point to the graph. From there it just follows any of the import statements to find the rest of the code.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/04_import_graph.png" target="_blank"><img class="alignnone size-large wp-image-32068" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/04_import_graph-500x291.png" alt="A module with two dependencies. The top module is the entry. The other two are related using import statements" width="500" height="291" srcset="https://hacks.mozilla.org/files/2018/03/04_import_graph-500x291.png 500w, https://hacks.mozilla.org/files/2018/03/04_import_graph-250x145.png 250w, https://hacks.mozilla.org/files/2018/03/04_import_graph-768x447.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>But files themselves aren’t something that the browser can use. It needs to parse all of these files to turn them into data structures called Module Records. That way, it actually knows what’s going on in the file.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/05_module_record.png" target="_blank"><img class="alignnone size-large wp-image-32069" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/05_module_record-500x287.png" alt="A module record with various fields, including RequestedModules and ImportEntries" width="500" height="287" srcset="https://hacks.mozilla.org/files/2018/03/05_module_record-500x287.png 500w, https://hacks.mozilla.org/files/2018/03/05_module_record-220x125.png 220w, https://hacks.mozilla.org/files/2018/03/05_module_record-250x144.png 250w, https://hacks.mozilla.org/files/2018/03/05_module_record-768x441.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>After that, the module record needs to be turned into a module instance. An instance combines two things: the code and state.</p>
+<p>The code is basically a set of instructions. It’s like a recipe for how to make something. But by itself, you can’t use the code to do anything. You need raw materials to use with those instructions.</p>
+<p>What is state? State gives you those raw materials. State is the actual values of the variables at any point in time. Of course, these variables are just nicknames for the boxes in memory that hold the values.</p>
+<p>So the module instance combines the code (the list of instructions) with the state (all the variables’ values).</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/06_module_instance.png" target="_blank"><img class="alignnone size-large wp-image-32070" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/06_module_instance-500x372.png" alt="A module instance combining code and state" width="500" height="372" srcset="https://hacks.mozilla.org/files/2018/03/06_module_instance-500x372.png 500w, https://hacks.mozilla.org/files/2018/03/06_module_instance-250x186.png 250w, https://hacks.mozilla.org/files/2018/03/06_module_instance-768x572.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>What we need is a module instance for each module. The process of module loading is going from this entry point file to having a full graph of module instances.</p>
+<p>For ES modules, this happens in three steps.</p>
+<ol>
+<li>Construction — find, download, and parse all of the files into module records.</li>
+<li>Instantiation —find boxes in memory to place all of the exported values in (but don’t fill them in with values yet). Then make both exports and imports point to those boxes in memory. This is called linking.</li>
+<li>Evaluation —run the code to fill in the boxes with the variables’ actual values.</li>
+</ol>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/07_3_phases.png" target="_blank"><img class="alignnone size-large wp-image-32071" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/07_3_phases-500x184.png" alt="The three phases. Construction goes from a single JS file to multiple module records. Instantiation links those records. Evaluation executes the code." width="500" height="184" srcset="https://hacks.mozilla.org/files/2018/03/07_3_phases-500x184.png 500w, https://hacks.mozilla.org/files/2018/03/07_3_phases-250x92.png 250w, https://hacks.mozilla.org/files/2018/03/07_3_phases-768x282.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>People talk about ES modules being asynchronous. You can think about it as asynchronous because the work is split into these three different phases — loading, instantiating, and evaluating — and those phases can be done separately.</p>
+<p>This means the spec does introduce a kind of asynchrony that wasn’t there in CommonJS. I’ll explain more later, but in CJS a module and the dependencies below it are loaded, instantiated, and evaluated all at once, without any breaks in between.</p>
+<p>However, the steps themselves are not necessarily asynchronous. They can be done in a synchronous way. It depends on what’s doing the loading. That’s because not everything is controlled by the ES module spec. There are actually two halves of the work, which are covered by different specs.</p>
+<p>The <a href="https://tc39.github.io/ecma262/#sec-modules" target="_blank">ES module spec</a> says how you should parse files into module records, and how you should instantiate and evaluate that module. However, it doesn’t say how to get the files in the first place.</p>
+<p>It’s the loader that fetches the files. And the loader is specified in a different specification. For browsers, that spec is the <a href="https://html.spec.whatwg.org/#fetch-a-module-script-tree" target="_blank">HTML spec</a>. But you can have different loaders based on what platform you are using.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/07_loader_vs_es.png" target="_blank"><img class="alignnone size-large wp-image-32072" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/07_loader_vs_es-500x286.png" alt="Two cartoon figures. One represents the spec that says how to load modules (i.e., the HTML spec). The other represents the ES module spec." width="500" height="286" srcset="https://hacks.mozilla.org/files/2018/03/07_loader_vs_es-500x286.png 500w, https://hacks.mozilla.org/files/2018/03/07_loader_vs_es-220x125.png 220w, https://hacks.mozilla.org/files/2018/03/07_loader_vs_es-250x143.png 250w, https://hacks.mozilla.org/files/2018/03/07_loader_vs_es-768x439.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>The loader also controls exactly how the modules are loaded. It calls the ES module methods — <code>ParseModule</code>, <code>Module.Instantiate</code>, and <code>Module.Evaluate</code>. It’s kind of like a puppeteer controlling the JS engine’s strings.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/08_loader_as_puppeteer.png" target="_blank"><img class="alignnone size-large wp-image-32073" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/08_loader_as_puppeteer-500x330.png" alt="The loader figure acting as a puppeteer to the ES module spec figure." width="500" height="330" srcset="https://hacks.mozilla.org/files/2018/03/08_loader_as_puppeteer-500x330.png 500w, https://hacks.mozilla.org/files/2018/03/08_loader_as_puppeteer-250x165.png 250w, https://hacks.mozilla.org/files/2018/03/08_loader_as_puppeteer-768x507.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>Now let’s walk through each step in more detail.</p>
+<h4>Construction</h4>
+<p>Three things happen for each module during the Construction phase.</p>
+<ol>
+<li>Figure out where to download the file containing the module from (aka module resolution)</li>
+<li>Fetch the file (by downloading it from a URL or loading it from the file system)</li>
+<li>Parse the file into a module record</li>
+</ol>
+<h4>Finding the file and fetching&nbsp;it</h4>
+<p>The loader will take care of finding the file and downloading it. First it needs to find the entry point file. In HTML, you tell the loader where to find it by using a script tag.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/08_script_entry.png" target="_blank"><img class="alignnone size-large wp-image-32074" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/08_script_entry-500x188.png" alt="A script tag with the type=module attribute and a src URL. The src URL has a file coming from it which is the entry" width="500" height="188" srcset="https://hacks.mozilla.org/files/2018/03/08_script_entry-500x188.png 500w, https://hacks.mozilla.org/files/2018/03/08_script_entry-250x94.png 250w, https://hacks.mozilla.org/files/2018/03/08_script_entry-768x288.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>But how does it find the next bunch of modules — the modules that <code>main.js</code> directly depends on?</p>
+<p>This is where import statements come in. One part of the import statement is called the module specifier. It tells the loader where it can find each next module.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/09_module_specifier.png" target="_blank"><img class="alignnone size-large wp-image-32075" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/09_module_specifier-500x105.png" alt="An import statement with the URL at the end labeled as the module specifier" width="500" height="105" srcset="https://hacks.mozilla.org/files/2018/03/09_module_specifier-500x105.png 500w, https://hacks.mozilla.org/files/2018/03/09_module_specifier-250x52.png 250w, https://hacks.mozilla.org/files/2018/03/09_module_specifier-768x161.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>One thing to note about module specifiers: they sometimes need to be handled differently between browsers and Node. Each host has its own way of interpreting the module specifier strings. To do this, it uses something called a module resolution algorithm, which differs between platforms. Currently, some module specifiers that work in Node won’t work in the browser, but there is <a href="https://github.com/domenic/package-name-maps" target="_blank">ongoing work to fix this</a>.</p>
+<p>Until that’s fixed, browsers only accept URLs as module specifiers. They will load the module file from that URL. But that doesn’t happen for the whole graph at the same time. You don’t know what dependencies the module needs you to fetch until you’ve parsed the file… and you can’t parse the file until you fetched it.</p>
+<p>This means that we have to go through the tree layer-by-layer, parsing one file, then figuring out its dependencies, and then finding and loading those dependencies.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/10_construction.png" target="_blank"><img class="alignnone size-large wp-image-32076" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/10_construction-500x302.png" alt="A diagram that shows one file being fetched and then parsed, and then two more files being fetched and then parsed" width="500" height="302" srcset="https://hacks.mozilla.org/files/2018/03/10_construction-500x302.png 500w, https://hacks.mozilla.org/files/2018/03/10_construction-250x151.png 250w, https://hacks.mozilla.org/files/2018/03/10_construction-768x464.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>If the main thread were to wait for each of these files to download, a lot of other tasks would pile up in its queue.</p>
+<p>That’s because when you’re working in a browser, the downloading part takes a long time.</p>
+<p>&nbsp;</p>
+<figure><img class="alignnone size-large wp-image-32077" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/11_latency-500x270.png" alt="A chart of latencies showing that if a CPU cycle took 1 second, then main memory access would take 6 minutes, and fetching a file from a server across the US would take 4 years" width="500" height="270" srcset="https://hacks.mozilla.org/files/2018/03/11_latency-500x270.png 500w, https://hacks.mozilla.org/files/2018/03/11_latency-250x135.png 250w, https://hacks.mozilla.org/files/2018/03/11_latency-768x415.png 768w" sizes="(max-width: 500px) 100vw, 500px"><figcaption>Based on <a href="https://twitter.com/srigi/status/917998817051541504" target="_blank">this chart</a>.</figcaption></figure>
+<p>Blocking the main thread like this would make an app that uses modules too slow to use. This is one of the reasons that the ES module spec splits the algorithm into multiple phases. Splitting out construction into its own phase allows browsers to fetch files and build up their understanding of the module graph before getting down to the synchronous work of instantiating.</p>
+<p>This approach—having the algorithm split up into phases—is one of the key differences between ES modules and CommonJS modules.</p>
+<p>CommonJS can do things differently because loading files from the filesystem takes much less time than downloading across the Internet. This means Node can block the main thread while it loads the file. And since the file is already loaded, it makes sense to just instantiate and evaluate (which aren’t separate phases in CommonJS). This also means that you’re walking down the whole tree, loading, instantiating, and evaluating any dependencies before you return the module instance.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/12_cjs_require.png" target="_blank"><img class="alignnone size-large wp-image-32078" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/12_cjs_require-500x298.png" alt="A diagram showing a Node module evaluating up to a require statement, and then Node going to synchronously load and evaluate the module and any of its dependencies" width="500" height="298" srcset="https://hacks.mozilla.org/files/2018/03/12_cjs_require-500x298.png 500w, https://hacks.mozilla.org/files/2018/03/12_cjs_require-250x149.png 250w, https://hacks.mozilla.org/files/2018/03/12_cjs_require-768x457.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>The CommonJS approach has a few implications, and I will explain more about those later. But one thing that it means is that in Node with CommonJS modules, you can use variables in your module specifier. You are executing all of the code in this module (up to the <code>require</code> statement) before you look for the next module. That means the variable will have a value when you go to do module resolution.</p>
+<p>But with ES modules, you’re building up this whole module graph beforehand… before you do any evaluation. This means you can’t have variables in your module specifiers, because those variables don’t have values yet.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/13_static_import.png" target="_blank"><img class="alignnone size-large wp-image-32079" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/13_static_import-500x146.png" alt="A require statement which uses a variable is fine. An import statement that uses a variable is not." width="500" height="146" srcset="https://hacks.mozilla.org/files/2018/03/13_static_import-500x146.png 500w, https://hacks.mozilla.org/files/2018/03/13_static_import-250x73.png 250w, https://hacks.mozilla.org/files/2018/03/13_static_import-768x225.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>But sometimes it is really useful to use variables for module paths. For example, you might want to switch which module you load depending on what the code is doing or what environment it is running in.</p>
+<p>To make this possible for ES modules, there’s a proposal called <a href="https://github.com/tc39/proposal-dynamic-import" target="_blank">dynamic import</a>. With it, you can use an import statement like <code>import(`${path}/foo.js`)</code>.</p>
+<p>The way this works is that any file loaded using <code>import()</code> is handled as the entry point to a separate graph. The dynamically imported module starts a new graph, which is processed separately.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/14dynamic_import_graph.png" target="_blank"><img class="alignnone size-large wp-image-32080" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/14dynamic_import_graph-500x389.png" alt="Two module graphs with a dependency between them, labeled with a dynamic import statement" width="500" height="389" srcset="https://hacks.mozilla.org/files/2018/03/14dynamic_import_graph-500x389.png 500w, https://hacks.mozilla.org/files/2018/03/14dynamic_import_graph-250x194.png 250w, https://hacks.mozilla.org/files/2018/03/14dynamic_import_graph-768x597.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>One thing to note, though — any module that is in both of these graphs is going to share a module instance. This is because the loader caches module instances. For each module in a particular global scope, there will only be one module instance.</p>
+<p>This means less work for the engine. For example, it means that the module file will only be fetched once even if multiple modules depend on it. (That’s one reason to cache modules. We’ll see another in the evaluation section.)</p>
+<p>The loader manages this cache using something called a <a href="https://html.spec.whatwg.org/multipage/webappapis.html#module-map" target="_blank">module map</a>. Each global keeps track of its modules in a separate module map.</p>
+<p>When the loader goes to fetch a URL, it puts that URL in the module map and makes a note that it’s currently fetching the file. Then it will send out the request and move on to start fetching the next file.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/15_module_map.png" target="_blank"><img class="alignnone size-large wp-image-32081" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/15_module_map-500x170.png" alt="The loader figure filling in a Module Map chart, with the URL of the main module on the left and the word fetching being filled in on the right" width="500" height="170" srcset="https://hacks.mozilla.org/files/2018/03/15_module_map-500x170.png 500w, https://hacks.mozilla.org/files/2018/03/15_module_map-250x85.png 250w, https://hacks.mozilla.org/files/2018/03/15_module_map-768x261.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>What happens if another module depends on the same file? The loader will look up each URL in the module map. If it sees <code>fetching</code> in there, it will just move on to the next URL.</p>
+<p>But the module map doesn’t just keep track of what files are being fetched. The module map also serves as a cache for the modules, as we’ll see next.</p>
+<h4>Parsing</h4>
+<p>Now that we have fetched this file, we need to parse it into a module record. This helps the browser understand what the different parts of the module are.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/25_file_to_module_record.png" target="_blank"><img class="alignnone size-large wp-image-32082" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/25_file_to_module_record-500x199.png" alt="Diagram showing main.js file being parsed into a module record" width="500" height="199" srcset="https://hacks.mozilla.org/files/2018/03/25_file_to_module_record-500x199.png 500w, https://hacks.mozilla.org/files/2018/03/25_file_to_module_record-250x100.png 250w, https://hacks.mozilla.org/files/2018/03/25_file_to_module_record-768x306.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>Once the module record is created, it is placed in the module map. This means that whenever it’s requested from here on out, the loader can pull it from that map.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/25_module_map.png" target="_blank"><img class="alignnone size-large wp-image-32083" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/25_module_map-500x239.png" alt="The “fetching” placeholders in the module map chart being filled in with module records" width="500" height="239" srcset="https://hacks.mozilla.org/files/2018/03/25_module_map-500x239.png 500w, https://hacks.mozilla.org/files/2018/03/25_module_map-250x119.png 250w, https://hacks.mozilla.org/files/2018/03/25_module_map-768x367.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>There is one detail in parsing that may seem trivial, but that actually has pretty big implications. All modules are parsed as if they had <code>"use strict"</code> at the top. There are also other slight differences. For example, the keyword <code>await</code> is reserved in a module’s top-level code, and the value of <code>this</code> is <code>undefined</code>.</p>
+<p>This different way of parsing is called a “parse goal”. If you parse the same file but use different goals, you’ll end up with different results. So you want to know before you start parsing what kind of file you’re parsing — whether it’s a module or not.</p>
+<p>In browsers this is pretty easy. You just put <code>type="module"</code> on the script tag. This tells the browser that this file should be parsed as a module. And since only modules can be imported, the browser knows that any imports are modules, too.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/26_parse_goal.png" target="_blank"><img class="alignnone size-large wp-image-32084" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/26_parse_goal-500x311.png" alt="The loader determining that main.js is a module because the type attribute on the script tag says so, and counter.js must be a module because it’s imported" width="500" height="311" srcset="https://hacks.mozilla.org/files/2018/03/26_parse_goal-500x311.png 500w, https://hacks.mozilla.org/files/2018/03/26_parse_goal-250x155.png 250w, https://hacks.mozilla.org/files/2018/03/26_parse_goal-768x477.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>But in Node, you don’t use HTML tags, so you don’t have the option of using a <code>type</code> attribute. One way the community has tried to solve this is by using an&nbsp;<code>.mjs</code> extension. Using that extension tells Node, “this file is a module”. You’ll see people talking about this as the signal for the parse goal. The discussion is currently ongoing, so it’s unclear what signal the Node community will decide to use in the end.</p>
+<p>Either way, the loader will determine whether to parse the file as a module or not. If it is a module and there are imports, it will then start the process over again until all of the files are fetched and parsed.</p>
+<p>And we’re done! At the end of the loading process, you’ve gone from having just an entry point file to having a bunch of module records.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/27_construction.png" target="_blank"><img class="alignnone size-large wp-image-32085" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/27_construction-500x406.png" alt="A JS file on the left, with 3 parsed module records on the right as a result of the construction phase" width="500" height="406" srcset="https://hacks.mozilla.org/files/2018/03/27_construction-500x406.png 500w, https://hacks.mozilla.org/files/2018/03/27_construction-250x203.png 250w, https://hacks.mozilla.org/files/2018/03/27_construction-768x624.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>The next step is to instantiate this module and link all of the instances together.</p>
+<h4>Instantiation</h4>
+<p>Like I mentioned before, an instance combines code with state. That state lives in memory, so the instantiation step is all about wiring things up to memory.</p>
+<p>First, the JS engine creates a module environment record. This manages the variables for the module record. Then it finds boxes in memory for all of the exports. The module environment record will keep track of which box in memory is associated with each export.</p>
+<p>These boxes in memory won’t get their values yet. It’s only after evaluation that their actual values will be filled in. There is one caveat to this rule: any exported function declarations are initialized during this phase. This makes things easier for evaluation.</p>
+<p>To instantiate the module graph, the engine will do what’s called a depth first post-order traversal. This means it will go down to the bottom of the graph — to the dependencies at the bottom that don’t depend on anything else — and set up their exports.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/30_live_bindings_01.png" target="_blank"><img class="alignnone size-large wp-image-32086" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/30_live_bindings_01-500x206.png" alt="A column of empty memory in the middle. Module environment records for the count and display modules are wired up to boxes in memory." width="500" height="206" srcset="https://hacks.mozilla.org/files/2018/03/30_live_bindings_01-500x206.png 500w, https://hacks.mozilla.org/files/2018/03/30_live_bindings_01-250x103.png 250w, https://hacks.mozilla.org/files/2018/03/30_live_bindings_01-768x316.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>The engine finishes wiring up all of the exports below a module — all of the exports that the module depends on. Then it comes back up a level to wire up the imports from that module.</p>
+<p>Note that both the export and the import point to the same location in memory. Wiring up the exports first guarantees that all of the imports can be connected to matching exports.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/30_live_bindings_02.png" target="_blank"><img class="alignnone size-large wp-image-32087" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/30_live_bindings_02-500x206.png" alt="Same diagram as above, but with the module environment record for main.js now having its imports linked up to the exports from the other two modules." width="500" height="206" srcset="https://hacks.mozilla.org/files/2018/03/30_live_bindings_02-500x206.png 500w, https://hacks.mozilla.org/files/2018/03/30_live_bindings_02-250x103.png 250w, https://hacks.mozilla.org/files/2018/03/30_live_bindings_02-768x316.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>This is different from CommonJS modules. In CommonJS, the entire export object is copied on export. This means that any values (like numbers) that are exported are copies.</p>
+<p>This means that if the exporting module changes that value later, the importing module doesn’t see that change.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/31_cjs_variable.png" target="_blank"><img class="alignnone size-large wp-image-32089" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/31_cjs_variable-500x113.png" alt="Memory in the middle with an exporting common JS module pointing to one memory location, then the value being copied to another and the importing JS module pointing to the new location" width="500" height="113" srcset="https://hacks.mozilla.org/files/2018/03/31_cjs_variable-500x113.png 500w, https://hacks.mozilla.org/files/2018/03/31_cjs_variable-250x57.png 250w, https://hacks.mozilla.org/files/2018/03/31_cjs_variable-768x174.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>In contrast, ES modules use something called live bindings. Both modules point to the same location in memory. This means that when the exporting module changes a value, that change will show up in the importing module.</p>
+<p>Modules that export values can change those values at any time, but importing modules cannot change the values of their imports. That being said, if a module imports an object, it can change property values that are on that object.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/30_live_bindings_04.png" target="_blank"><img class="alignnone size-large wp-image-32088" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/30_live_bindings_04-500x206.png" alt="The exporting module changing the value in memory. The importing module also tries but fails." width="500" height="206" srcset="https://hacks.mozilla.org/files/2018/03/30_live_bindings_04-500x206.png 500w, https://hacks.mozilla.org/files/2018/03/30_live_bindings_04-250x103.png 250w, https://hacks.mozilla.org/files/2018/03/30_live_bindings_04-768x316.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>The reason to have live bindings like this is then you can wire up all of the modules without running any code. This helps with evaluation when you have cyclic dependencies, as I’ll explain below.</p>
+<p>So at the end of this step, we have all of the instances and the memory locations for the exported/imported variables wired up.</p>
+<p>Now we can start evaluating the code and filling in those memory locations with their values.</p>
+<h4>Evaluation</h4>
+<p>The final step is filling in these boxes in memory. The JS engine does this by executing the top-level code — the code that is outside of functions.</p>
+<p>Besides just filling in these boxes in memory, evaluating the code can also trigger side effects. For example, a module might make a call to a server.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/40_top_level_code.png" target="_blank"><img class="alignnone size-large wp-image-32090" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/40_top_level_code-500x146.png" alt="A module will code outside of functions, labeled top level code" width="500" height="146" srcset="https://hacks.mozilla.org/files/2018/03/40_top_level_code-500x146.png 500w, https://hacks.mozilla.org/files/2018/03/40_top_level_code-250x73.png 250w, https://hacks.mozilla.org/files/2018/03/40_top_level_code-768x224.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>Because of the potential for side effects, you only want to evaluate the module once. As opposed to the linking that happens in instantiation, which can be done multiple times with exactly the same result, evaluation can have different results depending on how many times you do it.</p>
+<p>This is one reason to have the module map. The module map caches the module by canonical URL so that there is only one module record for each module. That ensures each module is only executed once. Just as with instantiation, this is done as a depth first post-order traversal.</p>
+<p>What about those cycles that we talked about before?</p>
+<p>In a cyclic dependency, you end up having a loop in the graph. Usually, this is a long loop. But to explain the problem, I’m going to use a contrived example with a short loop.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/41_cjs_cycle.png" target="_blank"><img class="alignnone size-large wp-image-32091" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/41_cjs_cycle-500x224.png" alt="A complex module graph with a 4 module cycle on the left. A simple 2 module cycle on the right." width="500" height="224" srcset="https://hacks.mozilla.org/files/2018/03/41_cjs_cycle-500x224.png 500w, https://hacks.mozilla.org/files/2018/03/41_cjs_cycle-250x112.png 250w, https://hacks.mozilla.org/files/2018/03/41_cjs_cycle-768x344.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>Let’s look at how this would work with CommonJS modules. First, the main module would execute up to the require statement. Then it would go to load the counter module.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/41_cyclic_graph.png" target="_blank"><img class="alignnone size-large wp-image-32092" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/41_cyclic_graph-500x281.png" alt="A commonJS module, with a variable being exported from main.js after a require statement to counter.js, which depends on that import" width="500" height="281" srcset="https://hacks.mozilla.org/files/2018/03/41_cyclic_graph-500x281.png 500w, https://hacks.mozilla.org/files/2018/03/41_cyclic_graph-220x125.png 220w, https://hacks.mozilla.org/files/2018/03/41_cyclic_graph-250x141.png 250w, https://hacks.mozilla.org/files/2018/03/41_cyclic_graph-768x432.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>The counter module would then try to access <code>message</code> from the export object. But since this hasn’t been evaluated in the main module yet, this will return undefined. The JS engine will allocate space in memory for the local variable and set the value to undefined.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/42_cjs_variable_2.png" target="_blank"><img class="alignnone size-large wp-image-32093" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/42_cjs_variable_2-500x113.png" alt="Memory in the middle with no connection between main.js and memory, but an importing link from counter.js to a memory location which has undefined" width="500" height="113" srcset="https://hacks.mozilla.org/files/2018/03/42_cjs_variable_2-500x113.png 500w, https://hacks.mozilla.org/files/2018/03/42_cjs_variable_2-250x57.png 250w, https://hacks.mozilla.org/files/2018/03/42_cjs_variable_2-768x174.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>Evaluation continues down to the end of the counter module’s top level code. We want to see whether we’ll get the correct value for message eventually (after main.js is evaluated), so we set up a timeout. Then evaluation resumes on <code>main.js</code>.</p>
+<p><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/43_cjs_cycle.png" target="_blank"><img class="alignnone size-large wp-image-32094" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/43_cjs_cycle-500x224.png" alt="counter.js returning control to main.js, which finishes evaluating" width="500" height="224" srcset="https://hacks.mozilla.org/files/2018/03/43_cjs_cycle-500x224.png 500w, https://hacks.mozilla.org/files/2018/03/43_cjs_cycle-250x112.png 250w, https://hacks.mozilla.org/files/2018/03/43_cjs_cycle-768x344.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></p>
+<p>The message variable will be initialized and added to memory. But since there’s no connection between the two, it will stay undefined in the required module.</p>
+<p><b><a href="https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2018/03/44_cjs_variable_2.png" target="_blank"><img class="alignnone size-large wp-image-32095" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/44_cjs_variable_2-500x216.png" alt="main.js getting its export connection to memory and filling in the correct value, but counter.js still pointing to the other memory location with undefined in it" width="500" height="216" srcset="https://hacks.mozilla.org/files/2018/03/44_cjs_variable_2-500x216.png 500w, https://hacks.mozilla.org/files/2018/03/44_cjs_variable_2-250x108.png 250w, https://hacks.mozilla.org/files/2018/03/44_cjs_variable_2-768x331.png 768w" sizes="(max-width: 500px) 100vw, 500px"></a></b></p>
+<p>If the export were handled using live bindings, the counter module would see the correct value eventually. By the time the timeout runs, <code>main.js</code>’s evaluation would have completed and filled in the value.</p>
+<p>Supporting these cycles is a big rationale behind the design of ES modules. It’s this three-phase design that makes them possible.</p>
+<h3>What’s the status of ES&nbsp;modules?</h3>
+<p>With the release of Firefox 60 in early May, all major browsers will support ES modules by default. Node is also adding support, with a <a href="https://github.com/nodejs/modules" target="_blank">working group</a> dedicated to figuring out compatibility issues between CommonJS and ES modules.</p>
+<p>This means that you’ll be able to use the script tag with <code>type=module</code>, and use imports and exports. However, more module features are yet to come. The <a href="https://github.com/tc39/proposal-dynamic-import" target="_blank">dynamic import proposal</a> is at Stage 3 in the specification process, as is <a href="https://github.com/tc39/proposal-import-meta" target="_blank">import.meta</a> which will help support Node.js use cases, and the <a href="https://github.com/domenic/package-name-maps" target="_blank">module resolution proposal</a> will also help smooth over differences between browsers and Node.js. So you can expect working with modules to get even better in the future.</p>
+<h2>Acknowledgements</h2>
+<p>Thank you to everyone who gave feedback on this post, or whose writing or discussions informed it, including Axel Rauschmayer, Bradley Farias, Dave Herman, Domenic Denicola, Havi Hoffman, Jason Weathersby, JF Bastien, Jon Coppeard, Luke Wagner, Myles Borins, Till Schneidereit, Tobias Koppers, and Yehuda Katz, as well as the members of the WebAssembly community group, the Node modules working group, and TC39.</p>
+    <section class="about">
+                                <h2 class="about__header">About
+                          <a class="url" href="https://twitter.com/linclark" rel="external me" target="_blank">
+                Lin Clark              </a>
+                      </h2>
+                      <p>Lin works in Advanced Development at Mozilla, with a focus on Rust and WebAssembly.</p>
+                    <ul class="author-meta fa-ul"><li><i class="fa-li fa fa-globe"></i><a href="https://twitter.com/linclark" class="website" rel="me" target="_blank">https://twitter.com/linclark</a></li><li><i class="fa-li fa fa-twitter"></i><a href="http://twitter.com/linclark" class="twitter" rel="me" target="_blank">@linclark</a></li></ul>            <p><a class="url" href="https://hacks.mozilla.org/author/lclarkmozilla-com/">More articles by Lin Clark…</a></p>
+                  </section>
+  </article>
+  <section class="promo">
+    <form id="newsletterForm" name="newsletter-form" class="newsletter block block--1 block--polite" action="https://www.mozilla.org/en-US/newsletter/" method="post">
+  <h2 class="heading">Learn the best of web development</h2>
+  <p class="newsletter__description">Sign up for the Mozilla Developer Newsletter:</p>
+  <input id="fmt" name="fmt" value="H" type="hidden">
+  <input id="newsletterNewslettersInput" name="newsletters" value="app-dev" type="hidden">
+
+  <div id="newsletterErrors" class="newsletter__errors"></div>
+
+  <div id="newsletterEmail" class="form__row">
+    <label for="newsletterEmailInput" class="offscreen">E-mail</label>
+    <input id="newsletterEmailInput" name="email" class="newsletter__input" required="" placeholder="you@example.com" size="30" type="email">
+  </div>
+
+  <div id="newsletterPrivacy" class="form__row form__fineprint">
+    <input id="newsletterPrivacyInput" name="privacy" required="" type="checkbox">
+    <label for="newsletterPrivacyInput">
+      I'm okay with Mozilla handling my info as explained in this <a href="https://www.mozilla.org/privacy/" target="_blank">Privacy Policy</a>.
+    </label>
+  </div>
+  <button id="newsletter-submit" type="submit" class="button positive">Sign up now</button>
+</form>
+<div id="newsletterThanks" class="newsletter newsletter--thanks block block--1 block--polite hidden">
+  <h2 class="heading">Thanks! Please check your inbox to confirm your subscription.</h2>
+  <p>If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us.
+  </p>
+</div>
+  </section>
+  
+
+<section class="discussion">
+  <hr class="dino">
+  <div class="comments">
+    <header class="comments__head">
+      <h3>20 comments</h3>
+    </header>
+
+          <ol class="comments__list">
+      
+ <li id="comment-23148" class="comment even thread-even depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Plopz</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>The problem I find with the current ES modules is a lot of statements like this.</p>
+<p>import {thing} from ‘../../../../thing/in/dir.js’;</p>
+<p>It would be really nice to be able to define a path that all imports would be relative from.</p>
+<p>import {thing} from ‘thing/in/dir.js’;</p>
+<p>I think babel has something like this using ‘@/thing/…’, but I don’t use babel.</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23148" rel="bookmark" title="Permanent link to this comment by Plopz"><abbr class="published" title="2018-03-29">March 29th, 2018</abbr> at 06:10</a>
+
+      <p class="comment__util"> </p>
+  <ol class="children">
+
+ <li id="comment-23176" class="comment odd alt depth-2">
+      <b class="comment__title vcard">
+      <cite class="author fn">George</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>It’s called modules resolving and webpack can do it too: <a href="https://webpack.js.org/configuration/resolve/" rel="nofollow" target="_blank">https://webpack.js.org/configuration/resolve/</a>. Take a look :)</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23176" rel="bookmark" title="Permanent link to this comment by George"><abbr class="published" title="2018-04-01">April 1st, 2018</abbr> at 03:04</a>
+
+      <p class="comment__util"> </p>
+  <ol class="children">
+
+ <li id="comment-23183" class="comment even depth-3">
+      <b class="comment__title vcard">
+      <cite class="author fn">Candy</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Yep, we use that. Wrote another custom import prefix for a different folder too. Write allll the custom import prefixes!</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23183" rel="bookmark" title="Permanent link to this comment by Candy"><abbr class="published" title="2018-04-03">April 3rd, 2018</abbr> at 21:26</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+
+ <li id="comment-23150" class="comment odd alt thread-odd thread-alt depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Tod</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Thanks Lin, I appreciate your nicely done article.<br>
+Tod</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23150" rel="bookmark" title="Permanent link to this comment by Tod"><abbr class="published" title="2018-03-29">March 29th, 2018</abbr> at 07:25</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-23152" class="comment even thread-even depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Thomazella</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Very informative as usual, great job!</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23152" rel="bookmark" title="Permanent link to this comment by Thomazella"><abbr class="published" title="2018-03-29">March 29th, 2018</abbr> at 08:19</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-23153" class="comment odd alt thread-odd thread-alt depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Daniel Worsnup</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Thanks for the great article! It was very informative. Regarding the nature of browsers in that they need to fetch imported modules as the modules are encountered during the parse phase, could you recommend ways that the browser can be told ahead of time which modules need to be fetched?</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23153" rel="bookmark" title="Permanent link to this comment by Daniel Worsnup"><abbr class="published" title="2018-03-29">March 29th, 2018</abbr> at 08:59</a>
+
+      <p class="comment__util"> </p>
+  <ol class="children">
+
+ <li id="comment-23170" class="comment even depth-2">
+      <b class="comment__title vcard">
+      <cite class="author fn">Mark</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p> and http2 server push</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23170" rel="bookmark" title="Permanent link to this comment by Mark"><abbr class="published" title="2018-03-30">March 30th, 2018</abbr> at 11:06</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+
+ <li id="comment-23156" class="comment odd alt thread-even depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">harikrishnan</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Great article! Thanks for demystifying ES modules. I loved the part on live bindings.</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23156" rel="bookmark" title="Permanent link to this comment by harikrishnan"><abbr class="published" title="2018-03-29">March 29th, 2018</abbr> at 13:13</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-23157" class="comment even thread-odd thread-alt depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Rick Marshall</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Thanks Lin.<br>
+Traditionally I have used variables and lamdas followed by calls when the window.onload event fires:<br>
+<a href="https://medium.com/@rickmarshall_57431/javascript-function-pattern-78dce6d2786" rel="nofollow" target="_blank">https://medium.com/@rickmarshall_57431/javascript-function-pattern-78dce6d2786</a><br>
+On the surface this pattern would seem to achieve all the same goals (at least for my own code).<br>
+Do you have any examples of how you modules could be used to replace this?<br>
+It may be for a more advanced essay, but ECMAScript also has an asynchronous and critical interaction with the display that the modules need to resolve.</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23157" rel="bookmark" title="Permanent link to this comment by Rick Marshall"><abbr class="published" title="2018-03-29">March 29th, 2018</abbr> at 15:20</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-23158" class="comment odd alt thread-even depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Billy</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Really nice article.  Thanks for taking the time to write a clear post and the cartoons were great too.</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23158" rel="bookmark" title="Permanent link to this comment by Billy"><abbr class="published" title="2018-03-29">March 29th, 2018</abbr> at 18:46</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-23159" class="comment even thread-odd thread-alt depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">LZX</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Thanks for your vivid cartoons that make ES module mechanism crystal clear!</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23159" rel="bookmark" title="Permanent link to this comment by LZX"><abbr class="published" title="2018-03-29">March 29th, 2018</abbr> at 19:38</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-23160" class="comment odd alt thread-even depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Dummy</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Is there a reason why Node didn’t decide that ‘require’ loads old code and ‘import’ loads new code instead of ‘import “something.mjs”‘ loads new code and ‘”import somethingelse.js”‘ loads old?</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23160" rel="bookmark" title="Permanent link to this comment by Dummy"><abbr class="published" title="2018-03-30">March 30th, 2018</abbr> at 02:02</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-23161" class="comment even thread-odd thread-alt depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Mariusz Nowak</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>&gt; This is different from CommonJS modules. In CommonJS, the entire export object is copied on export. </p>
+<p>Technically speaking this is not true (or at least misleading). There’s nothing copied in CJS. Value is just passed by reference, which is equivalent to `importedValue = exportedValue` </p>
+<p>Still as `require` always returns  value that’s *currently* exported, it doesn’t prevent CJS modules to export a value that changes over time, (If it would not be the case, the circular references would not be possible at all in CJS).</p>
+<p>So in CJS exports can also be dynamically changed. Difference from ESM is that CJS exports just one value and that there’s no handy cross-module live binding created. In CJS to get updated value we need to call `require` again (so referring to first sentence call: `importedValue = exportedValue`  again).</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23161" rel="bookmark" title="Permanent link to this comment by Mariusz Nowak"><abbr class="published" title="2018-03-30">March 30th, 2018</abbr> at 02:31</a>
+
+      <p class="comment__util"> </p>
+  <ol class="children">
+
+ <li id="comment-23169" class="comment byuser comment-author-lclarkmozilla-com bypostauthor odd alt depth-2">
+      <b class="comment__title vcard">
+      <cite class="author fn">Lin Clark</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>AFAIK, using require multiple times for the same module as a way to update the values that are imported is not an idiomatic use of Node.</p>
+<p>You can read more about CJS’s cyclic dependency limitations <a href="http://2ality.com/2015/07/es6-module-exports.html" rel="nofollow" target="_blank">here</a>. You can also try out the example I give to see how those kinds of cyclic dependencies do not work in Node.</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23169" rel="bookmark" title="Permanent link to this comment by Lin Clark"><abbr class="published" title="2018-03-30">March 30th, 2018</abbr> at 09:44</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+
+ <li id="comment-23162" class="comment even thread-even depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Albino Tonnina</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Amazing article! Loved it!</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23162" rel="bookmark" title="Permanent link to this comment by Albino Tonnina"><abbr class="published" title="2018-03-30">March 30th, 2018</abbr> at 02:54</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-23163" class="comment odd alt thread-odd thread-alt depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Manuel Ramos Martínez</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Thanks for the article.  As I was reading it looks very familiar to me. It is like Angular 5!</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23163" rel="bookmark" title="Permanent link to this comment by Manuel Ramos Martínez"><abbr class="published" title="2018-03-30">March 30th, 2018</abbr> at 03:54</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-23164" class="comment even thread-even depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Lennie</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>So fastest way to load on a webpage is list all modules used in the (template) HTML ? So it can fetch them all at the same time ?</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23164" rel="bookmark" title="Permanent link to this comment by Lennie"><abbr class="published" title="2018-03-30">March 30th, 2018</abbr> at 05:00</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-23165" class="comment odd alt thread-odd thread-alt depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Ashish</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Awesome read. Thanks!</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23165" rel="bookmark" title="Permanent link to this comment by Ashish"><abbr class="published" title="2018-03-30">March 30th, 2018</abbr> at 05:14</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-23168" class="comment even thread-even depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">Mike</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Thank you Ms. Clark! This explanation is excellent. Now I just have to wait for Firefox 60…</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23168" rel="bookmark" title="Permanent link to this comment by Mike"><abbr class="published" title="2018-03-30">March 30th, 2018</abbr> at 09:21</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-23177" class="comment odd alt thread-odd thread-alt depth-1">
+      <b class="comment__title vcard">
+      <cite class="author fn">George Brata</cite>
+    </b>
+  
+    
+    <blockquote class="comment__body">
+      <p>Another amazing article and very, very useful and easy-to-understand cartoons. I have already shared it so all my friends can know about it. Thank you, Mozilla but especially thank you, Lin.</p>
+    </blockquote>
+
+    <a class="comment__meta" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/#comment-23177" rel="bookmark" title="Permanent link to this comment by George Brata"><abbr class="published" title="2018-04-01">April 1st, 2018</abbr> at 03:06</a>
+
+      <p class="comment__util"> </p>
+  </li><!-- #comment-## -->
+      </ol>
+      </div>
+
+<p class="comments__closed"><b>Comments are closed for this article.</b></p>
+
+
+</section></main><!-- /#content-main -->
+
+  
+
+    <footer class="footer section section--fullwidth">
+      <div class="row">
+        <p class="block block--1">
+          Except where otherwise noted, content on this site is licensed
+          under the
+          <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license external">Creative Commons Attribution Share-Alike License v3.0</a>
+          or any later version.
+        </p>
+        <img class="footer__logo" alt="the Mozilla dino logo" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/dino.svg">
+      </div>
+    </footer>
+  </div>
+  <link rel="stylesheet" id="hljstheme-css" href="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/solarized-light.css" type="text/css" media="all">
+<script type="text/javascript" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/wp-syntax.js.download"></script>
+<script type="text/javascript" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/wp-embed.min.js.download"></script>
+<script type="text/javascript" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/highlight.common.pack.js.download"></script>
+<script type="text/javascript" src="./ES modules_ A cartoon deep-dive - Mozilla Hacks - the Web developer blog_files/highlight.custom.pack.js.download"></script>
+    <style>pre.hljs {padding: 5px;}
+pre.hljs code {}</style>
+    <script type="text/javascript">
+    (function($, window) {
+        var init_fn_flag = false;
+        var init_fn = (function() {
+            if (init_fn_flag)
+                return;
+            init_fn_flag = true;
+             hljs.configure({"tabReplace":"    "});
+            $('pre code').each(function(i, block) {
+                hljs.highlightBlock(block);
+            });
+        });
+        $(document).ready(init_fn);
+        $(window).on("load", init_fn);
+    })(jQuery, window);
+    </script>
+  <script>
+    // External links should open in a new tab.
+    (function () {
+      var postLinks = document.querySelectorAll('#content-main a');
+
+      var origin = location.origin;
+
+      for (var i = 0; i < postLinks.length; i++) {
+        var link = postLinks[i];
+        if (link.origin !== origin && !link.getAttribute('target')) {
+          link.setAttribute('target', '_blank');
+        }
+      }
+    })();
+
+    window.addEventListener('load', function () {
+      if (document.querySelector('#newsletterForm')) {
+        var script = document.createElement('script');
+        var path = document.head.getAttribute('data-template-path');
+        script.setAttribute('src', path + '/js/newsletter.js');
+        document.head.appendChild(script);
+      }
+    });
+  </script>
+
+
+</body></html>

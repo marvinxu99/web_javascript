@@ -1,0 +1,9 @@
+(1) createdb smart-brain
+(2) psql smart-brain
+
+(3) knex.js for db connection;     there is also pg.-promise 
+	http://knexjs.org/
+	
+(4) $ npm install knex --save
+	# Then add one of the following (adding a --save) flag:
+(5) $ npm install pg --save    // 'pg' is for postgreSQL  

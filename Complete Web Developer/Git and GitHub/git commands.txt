@@ -1,0 +1,13 @@
+git clone http:...
+git pull 
+git branch conflict
+git checkout conflict
+
+git status
+git add .
+git commit -m"fixing some issues"
+git push
+
+git merge master
+
+

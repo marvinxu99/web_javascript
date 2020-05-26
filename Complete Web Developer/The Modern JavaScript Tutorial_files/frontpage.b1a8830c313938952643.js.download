@@ -1,0 +1,1630 @@
+var frontpage = function(e) {
+var t = {};
+function n(r) {
+if (t[r]) return t[r].exports;
+var o = t[r] = {
+i: r,
+l: !1,
+exports: {}
+};
+return e[r].call(o.exports, o, o.exports, n), o.l = !0, o.exports;
+}
+return n.m = e, n.c = t, n.d = function(e, t, r) {
+n.o(e, t) || Object.defineProperty(e, t, {
+enumerable: !0,
+get: r
+});
+}, n.r = function(e) {
+"undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, {
+value: "Module"
+}), Object.defineProperty(e, "__esModule", {
+value: !0
+});
+}, n.t = function(e, t) {
+if (1 & t && (e = n(e)), 8 & t) return e;
+if (4 & t && "object" == typeof e && e && e.__esModule) return e;
+var r = Object.create(null);
+if (n.r(r), Object.defineProperty(r, "default", {
+enumerable: !0,
+value: e
+}), 2 & t && "string" != typeof e) for (var o in e) n.d(r, o, function(t) {
+return e[t];
+}.bind(null, o));
+return r;
+}, n.n = function(e) {
+var t = e && e.__esModule ? function() {
+return e.default;
+} : function() {
+return e;
+};
+return n.d(t, "a", t), t;
+}, n.o = function(e, t) {
+return Object.prototype.hasOwnProperty.call(e, t);
+}, n.p = "/pack/", n(n.s = 399);
+}({
+0: function(e, t) {
+e.exports = {
+lang: "en",
+currency: {
+code: "USD",
+sign: "$"
+},
+env: "production",
+ordersMail: "orders@javascript.info",
+providers: [ {
+name: "Facebook",
+id: "facebook"
+}, {
+name: "Google+",
+id: "google"
+}, {
+name: "Github",
+id: "github"
+} ],
+stripeKey: "pk_live_ukCHHaAAUHELtXYFa9EwbROW"
+};
+},
+1: function(e, t, n) {
+"use strict";
+var r = new (n(6))("en"), o = console.error;
+function i(e) {
+return r.hasPhrase(s, e) || o("No such phrase", e), r.t.apply(r, [ s ].concat(Array.prototype.slice.call(arguments)));
+}
+e.exports = i;
+var s = n(0).lang;
+"en" !== s && r.setFallback(s, "en"), r.add = function() {
+for (var e = arguments.length, t = new Array(e), n = 0; n < e; n++) t[n] = arguments[n];
+return r.addPhrase.apply(r, [ s ].concat(t));
+}, i.i18n = r;
+},
+10: function(e, t) {
+function n(e) {
+if (e = e || {}, this.elem = e.elem, this.size = e.size || "medium", this.class = e.class ? " " + e.class : "", 
+this.elemClass = e.elemClass, "medium" != this.size && "small" != this.size && "large" != this.size) throw new Error("Unsupported size: " + this.size);
+this.elem || (this.elem = document.createElement("div"));
+}
+n.prototype.start = function() {
+this.elemClass && this.elem.classList.toggle(this.elemClass), this.elem.insertAdjacentHTML("beforeend", '<span class="spinner spinner_active spinner_' + this.size + this.class + '"><span class="spinner__dot spinner__dot_1"></span><span class="spinner__dot spinner__dot_2"></span><span class="spinner__dot spinner__dot_3"></span></span>');
+}, n.prototype.stop = function() {
+var e = this.elem.querySelector(".spinner");
+e && (e.remove(), this.elemClass && this.elem.classList.toggle(this.elemClass));
+}, window.Spinner = n, e.exports = n;
+},
+12: function(e, t) {
+e.exports = function() {
+var e = document.cookie.match(/XSRF-TOKEN=([\w-]+)/);
+return e ? e[1] : null;
+};
+},
+13: function(e, t, n) {
+var r = {
+"./en.yml": 14
+};
+function o(e) {
+var t = i(e);
+return n(t);
+}
+function i(e) {
+if (!n.o(r, e)) {
+var t = new Error("Cannot find module '" + e + "'");
+throw t.code = "MODULE_NOT_FOUND", t;
+}
+return r[e];
+}
+o.keys = function() {
+return Object.keys(r);
+}, o.resolve = i, e.exports = o, o.id = 13;
+},
+135: function(e, t, n) {},
+14: function(e, t) {
+e.exports = {
+site: {
+privacy_policy: "privacy policy",
+terms: "terms of usage",
+gdpr_dialog: {
+title: "This website uses cookies",
+text: 'We use browser technologies such as cookies and local storage to store your preferences. You need to accept our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms of Use</a> for us to do so.',
+accept: "Accept",
+cancel: "Cancel"
+},
+toolbar: {
+lang_switcher: {
+cta_text: '<p>We want to make this open-source project available for people all around the world.</p> <p><a href="https://javascript.info/translate">Help to translate</a> the content of this tutorial to your language!</p>\n',
+footer_text: "how much content is translated to the corresponding language",
+old_version: "Old version is published, needs backporting."
+},
+logo: {
+normal: {
+svg: "sitetoolbar__logo_en.svg",
+width: 200
+},
+"normal-white": {
+svg: "sitetoolbar__logo_en-white.svg"
+},
+small: {
+svg: "sitetoolbar__logo_small_en.svg",
+width: 70
+},
+"small-white": {
+svg: "sitetoolbar__logo_small_en-white.svg"
+}
+},
+sections: null,
+buy_ebook_extra: "Buy",
+buy_ebook: "EPUB/PDF",
+search_placeholder: "Search on Javascript.info",
+search_button: "Search",
+public_profile: "Public profile",
+account: "Account",
+notifications: "Notifications",
+admin: "Admin",
+logout: "Logout"
+},
+sorry_old_browser: "Sorry, IE<10 is not supported, please use a newer browser.",
+contact_us: "contact us",
+about_the_project: "about the project",
+ilya_kantor: "Ilya Kantor",
+comments: "Comments",
+loading: "Loading...",
+search: "Search",
+share: "Share",
+read_before_commenting: "read this before commenting…",
+last_updated_at: "Last updated at #{date}",
+meta: {
+description: "Modern JavaScript Tutorial: simple, but detailed explanations with examples and tasks, including: closures, document and events, object oriented programming and more."
+},
+"tablet-menu": {
+choose_section: "Choose section",
+search_placeholder: "Search in the tutorial",
+search_button: "Search"
+},
+comment: {
+help: [ 'If you have suggestions what to improve - please <a href="https://github.com/javascript-tutorial/en.javascript.info/issues/new">submit a GitHub issue</a> or a pull request instead of commenting.', "If you can't understand something in the article – please elaborate.", "To insert a few words of code, use the <code>&lt;code&gt;</code> tag, for several lines – use <code>&lt;pre&gt;</code>, for more than 10 lines – use a sandbox (<a href='https://plnkr.co/edit/?p=preview'>plnkr</a>, <a href='http://jsbin.com'>JSBin</a>, <a href='http://codepen.io'>codepen</a>…)" ]
+},
+edit_on_github: "Edit on Github",
+error: "error",
+close: "close",
+hide_forever: "hide permanently",
+hidden_forever: "This information will not show up any more.",
+subscribe: {
+title: "Watch for javascript.info updates",
+text: "We do not send advertisements, only relevant stuff. You choose what to receive:",
+agreement: 'By signing up to newsletters you agree to the <a href="#{link}" target="_blank">terms of usage</a>.',
+button: "Subscribe",
+button_unsubscribe: "Unsubscribe from all",
+common_updates: "Common updates",
+common_updates_text: "new courses, master classes, article and screencast releases",
+your_email: "your@email.here",
+newsletters: "newsletter,newsletters,newsletters",
+no_selected: "Nothing selected"
+},
+form: {
+value_must_not_be_empty: "Value must not be empty.",
+value_is_too_long: "Value is too long.",
+value_is_too_short: "Value is too short.",
+invalid_email: "Invalid email.",
+invalid_value: "Invalid value.",
+invalid_autocomplete: "Please, choose from the list",
+invalid_date: "Invalid date, format: dd.mm.yyyyy.",
+invalid_range: "This date is invalid here.",
+save: "Save",
+upload_file: "Upload file",
+cancel: "Cancel",
+server_error: "Request error, status code"
+}
+}
+};
+},
+15: function(e, t, n) {
+var r = {
+"./en.yml": 16
+};
+function o(e) {
+var t = i(e);
+return n(t);
+}
+function i(e) {
+if (!n.o(r, e)) {
+var t = new Error("Cannot find module '" + e + "'");
+throw t.code = "MODULE_NOT_FOUND", t;
+}
+return r[e];
+}
+o.keys = function() {
+return Object.keys(r);
+}, o.resolve = i, e.exports = o, o.id = 15;
+},
+16: function(e, t) {
+e.exports = {
+server_connection_error: "Server connection error.",
+server_request_timeout: "Server request timeout.",
+request_aborted: "Request was aborted.",
+no_response: "No response from server.",
+server_error: "Server error (code #{status}), try again later.",
+invalid_format: "Invalid response format."
+};
+},
+2: function(e, t, n) {
+"use strict";
+function r(e) {
+return (r = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(e) {
+return typeof e;
+} : function(e) {
+return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e;
+})(e);
+}
+function o(e, t) {
+return !t || "object" !== r(t) && "function" != typeof t ? function(e) {
+if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+return e;
+}(e) : t;
+}
+function i(e) {
+return (i = Object.setPrototypeOf ? Object.getPrototypeOf : function(e) {
+return e.__proto__ || Object.getPrototypeOf(e);
+})(e);
+}
+function s(e, t) {
+if ("function" != typeof t && null !== t) throw new TypeError("Super expression must either be null or a function");
+e.prototype = Object.create(t && t.prototype, {
+constructor: {
+value: e,
+writable: !0,
+configurable: !0
+}
+}), t && a(e, t);
+}
+function a(e, t) {
+return (a = Object.setPrototypeOf || function(e, t) {
+return e.__proto__ = t, e;
+})(e, t);
+}
+function c(e, t) {
+if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
+}
+function u(e, t) {
+for (var n = 0; n < t.length; n++) {
+var r = t[n];
+r.enumerable = r.enumerable || !1, r.configurable = !0, "value" in r && (r.writable = !0), 
+Object.defineProperty(e, r.key, r);
+}
+}
+function l(e, t, n) {
+return t && u(e.prototype, t), n && u(e, n), e;
+}
+n.r(t), n.d(t, "init", function() {
+return h;
+}), n.d(t, "Info", function() {
+return v;
+}), n.d(t, "Warning", function() {
+return m;
+}), n.d(t, "Success", function() {
+return y;
+}), n.d(t, "Error", function() {
+return g;
+});
+var f = n(3), p = function() {
+function e() {
+var t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+c(this, e), this.notifications = [], this.verticalSpace = t.verticalSpace || 8;
+}
+return l(e, [ {
+key: "register",
+value: function(e) {
+var t = this;
+this.notifications.unshift(e), setTimeout(function() {
+return t.recalculate();
+}, 20);
+}
+}, {
+key: "unregister",
+value: function(e) {
+var t = this.notifications.indexOf(e);
+this.notifications.splice(t, 1), this.recalculate();
+}
+}, {
+key: "recalculate",
+value: function() {
+var e = this, t = this.verticalSpace;
+this.notifications.forEach(function(n) {
+n.top = t, t += n.height + e.verticalSpace;
+});
+}
+} ]), e;
+}();
+function h(e) {
+window.notificationManager || (window.notificationManager = new p(e));
+}
+var d = function() {
+function e(t, n, r) {
+c(this, e);
+var o = '<div class="notification notification_popup notification_'.concat(n, '">\n    <div class="notification__content">').concat(t, '</div>\n    <button title="Закрыть" class="notification__close"></button></div>');
+switch (document.body.insertAdjacentHTML("beforeEnd", o), this.elem = document.body.lastElementChild, 
+r) {
+case void 0:
+this.timeout = this.TIMEOUT_DEFAULT;
+break;
+
+case "slow":
+this.timeout = this.TIMEOUT_SLOW;
+break;
+
+case "fast":
+this.timeout = this.TIMEOUT_FAST;
+break;
+
+default:
+this.timeout = r;
+}
+window.notificationManager.register(this), this.setupCloseHandler(), this.setupCloseTimeout();
+}
+return l(e, [ {
+key: "close",
+value: function() {
+this.elem.parentNode && (this.elem.remove(), window.notificationManager.unregister(this));
+}
+}, {
+key: "setupCloseHandler",
+value: function() {
+var e = this;
+this.delegate(".notification__close", "click", function() {
+return e.close();
+});
+}
+}, {
+key: "setupCloseTimeout",
+value: function() {
+var e = this;
+this.timeout && setTimeout(function() {
+return e.close();
+}, this.timeout);
+}
+}, {
+key: "TIMEOUT_DEFAULT",
+get: function() {
+return 3e3;
+}
+}, {
+key: "TIMEOUT_SLOW",
+get: function() {
+return 5e3;
+}
+}, {
+key: "TIMEOUT_FAST",
+get: function() {
+return 1500;
+}
+}, {
+key: "height",
+get: function() {
+return this.elem.offsetHeight;
+}
+}, {
+key: "top",
+set: function(e) {
+this.elem.style.transform = "translateY(" + e + "px)";
+}
+} ]), e;
+}();
+f.delegateMixin(d.prototype);
+var v = function(e) {
+function t(e, n) {
+return c(this, t), o(this, i(t).call(this, e, "info", n));
+}
+return s(t, d), t;
+}(), m = function(e) {
+function t(e, n) {
+return c(this, t), o(this, i(t).call(this, e, "warning", n));
+}
+return s(t, d), t;
+}(), y = function(e) {
+function t(e, n) {
+return c(this, t), o(this, i(t).call(this, e, "success", n));
+}
+return s(t, d), t;
+}(), g = function(e) {
+function t(e, n) {
+return c(this, t), o(this, i(t).call(this, e, "error", n));
+}
+return s(t, d), l(t, [ {
+key: "TIMEOUT_DEFAULT",
+get: function() {
+return 5e3;
+}
+} ]), t;
+}();
+},
+3: function(e, t) {
+function n(e, t, n, r, o) {
+e.addEventListener(n, function(e) {
+var n = function(e, t) {
+for (var n = e.target; n; ) {
+if (n.matches(t)) return n;
+if (n == e.currentTarget) break;
+n = n.parentElement;
+}
+return null;
+}(e, t);
+e.delegateTarget = n, n && r.call(o || this, e);
+});
+}
+n.delegateMixin = function(e) {
+e.delegate = function(e, t, r) {
+n(this.elem, e, t, r, this);
+};
+}, e.exports = n;
+},
+365: function(e, t, n) {
+function r(e) {
+return function(e) {
+if (Array.isArray(e)) {
+for (var t = 0, n = new Array(e.length); t < e.length; t++) n[t] = e[t];
+return n;
+}
+}(e) || function(e) {
+if (Symbol.iterator in Object(e) || "[object Arguments]" === Object.prototype.toString.call(e)) return Array.from(e);
+}(e) || function() {
+throw new TypeError("Invalid attempt to spread non-iterable instance");
+}();
+}
+var o = n(10), i = n(5), s = n(2), a = n(366), c = n(1), u = n(0).lang;
+function l(e, t) {
+if (e.elements.email.value) {
+var n, a = e.elements.slug, u = r(a.querySelectorAll("option:checked")).map(function(e) {
+return e.value;
+});
+if (u.length || (u = a.value), e.elements["subscribe-email"] && (n = !0), n || u.length) {
+var l = {
+email: e.elements.email.value,
+slug: u
+};
+n && (l.replace = !0);
+var f = i({
+method: "POST",
+url: e.action,
+body: l
+}), p = e.querySelector('[type="submit"]'), h = new o({
+elem: p,
+size: "small",
+elemClass: "button_loading"
+});
+h.start(), p.disabled = !0, f.addEventListener("loadend", function() {
+h.stop(), p.disabled = !1;
+}), f.addEventListener("success", function(n) {
+if (200 == this.status) {
+new s.Success(n.result.message, "slow");
+var r = e.elements.gaEvent && JSON.parse(e.elements.gaEvent.value);
+r && window.ga("send", "event", r), t && t();
+} else new s.Error(n.result.message);
+});
+} else new s.Error(c("newsletter.client.choose_newsletter"));
+}
+}
+c.i18n.add("newsletter.client", n(368)("./" + u + ".yml")), t.initNewsletterForm = function() {
+var e = document.querySelector("[data-newsletter-subscribe-form]");
+if (e) {
+var t = "hidden" === e.elements.email.type, n = e.querySelector(".multiselect");
+if (n) {
+var r = new a({
+elem: n
+}), o = e.querySelector('button[type="submit"]'), i = o.querySelector("span");
+e.elements.slug && e.elements.slug.addEventListener("change", function() {
+o.disabled = !r.getValues().length && !t, !r.getValues().length && t ? i.textContent = c("site.subscribe.button_unsubscribe") : i.textContent = c("site.subscribe.button");
+});
+}
+e.onsubmit = function(t) {
+t.preventDefault(), l(e);
+};
+}
+}, t.initNewsletterLink = function() {
+var e = document.querySelector("[data-newsletter-subscribe-link]");
+e && (e.onclick = function(t) {
+t.preventDefault();
+var n = prompt(c("newsletter.client.email_please"), window.currentUser && window.currentUser.email || "");
+n && i({
+method: "POST",
+url: "/newsletter/subscribe",
+body: {
+slug: e.dataset.slug,
+email: n
+}
+}).addEventListener("success", function(t) {
+if (200 == this.status) {
+new s.Success(t.result.message, "slow");
+var n = e.dataset.gaEvent && JSON.parse(e.dataset.gaEvent);
+n && window.ga("send", "event", n);
+} else new s.Error(t.result.message);
+});
+});
+}, t.submitSubscribeForm = l;
+},
+366: function(e, t, n) {
+function r(e) {
+return function(e) {
+if (Array.isArray(e)) {
+for (var t = 0, n = new Array(e.length); t < e.length; t++) n[t] = e[t];
+return n;
+}
+}(e) || function(e) {
+if (Symbol.iterator in Object(e) || "[object Arguments]" === Object.prototype.toString.call(e)) return Array.from(e);
+}(e) || function() {
+throw new TypeError("Invalid attempt to spread non-iterable instance");
+}();
+}
+function o(e, t) {
+for (var n = 0; n < t.length; n++) {
+var r = t[n];
+r.enumerable = r.enumerable || !1, r.configurable = !0, "value" in r && (r.writable = !0), 
+Object.defineProperty(e, r.key, r);
+}
+}
+var i = n(1), s = n(51), a = function() {
+function e(t) {
+!function(e, t) {
+if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
+}(this, e), this.elem = t.elem, this.select = this.elem.querySelector("select"), 
+this.textContainer = this.elem.querySelector(".multiselect__active-button"), this.options = r(this.select.querySelectorAll("option")), 
+this.defaultValue = this.textContainer.textContent, this.status = "closed", this.elem.querySelector(".multiselect__container").insertAdjacentHTML("beforeend", this.createDropdown()), 
+this.setButtonTitle(), this.bindHandlers();
+}
+var t, n, a;
+return t = e, (n = [ {
+key: "createDropdown",
+value: function() {
+return "\n      <div class='multiselect__dropdown-container'>\n        <div class='multiselect__dropdown'>\n          ".concat(this.options.map(function(e) {
+return "<div class='multiselect__item".concat(e.selected ? " multiselect__item_checked" : "", "' data-value='").concat(e.value, "'>\n                <span class='multiselect__item-title'>").concat(e.textContent + ("advanced" === e.value ? "<span class='multiselect__greyed-text'>".concat(i("site.subscribe.common_updates_text"), "</span>") : ""), "</span>\n              </div>");
+}).join(""), "\n        </div>\n      </div>\n    ");
+}
+}, {
+key: "bindHandlers",
+value: function() {
+this.textContainer.addEventListener("click", this.toggleDropdown.bind(this));
+var e = !0, t = !1, n = void 0;
+try {
+for (var r, o = this.elem.querySelectorAll(".multiselect__item")[Symbol.iterator](); !(e = (r = o.next()).done); e = !0) {
+r.value.addEventListener("click", this.onChange.bind(this));
+}
+} catch (e) {
+t = !0, n = e;
+} finally {
+try {
+e || null == o.return || o.return();
+} finally {
+if (t) throw n;
+}
+}
+this.select.addEventListener("change", this.setButtonTitle.bind(this));
+}
+}, {
+key: "toggleDropdown",
+value: function(e) {
+e.stopPropagation(), this.elem.classList.toggle("multiselect_opened"), this.toggleStatus(), 
+"opened" === this.status && (this.boundCloseDropdown = this.closeDropdown.bind(this), 
+document.addEventListener("click", this.boundCloseDropdown));
+}
+}, {
+key: "toggleStatus",
+value: function() {
+"closed" === this.status ? this.status = "opened" : this.status = "closed";
+}
+}, {
+key: "closeDropdown",
+value: function(e) {
+e.target.closest(".multiselect__dropdown-container") || (this.status = "closed", 
+this.elem.classList.remove("multiselect_opened"), document.removeEventListener("click", this.boundCloseDropdown));
+}
+}, {
+key: "onChange",
+value: function(e) {
+var t = e.target.closest(".multiselect__item");
+t.classList.toggle("multiselect__item_checked"), this.options.filter(function(e) {
+return e.value === t.getAttribute("data-value");
+}).pop().selected = t.classList.contains("multiselect__item_checked"), this.select.dispatchEvent(new Event("change"));
+}
+}, {
+key: "setButtonTitle",
+value: function() {
+var e = this.getValues();
+1 === e.length && e.includes("advanced") ? this.textContainer.textContent = this.defaultValue : e.length ? this.textContainer.textContent = e.length + " " + s(e.length, i("site.subscribe.newsletters")) : this.textContainer.textContent = i("site.subscribe.no_selected");
+}
+}, {
+key: "getValues",
+value: function() {
+return this.options.filter(function(e) {
+return e.selected;
+}).map(function(e) {
+return e.value;
+});
+}
+} ]) && o(t.prototype, n), a && o(t, a), e;
+}();
+e.exports = a;
+},
+368: function(e, t, n) {
+var r = {
+"./en.yml": 369
+};
+function o(e) {
+var t = i(e);
+return n(t);
+}
+function i(e) {
+if (!n.o(r, e)) {
+var t = new Error("Cannot find module '" + e + "'");
+throw t.code = "MODULE_NOT_FOUND", t;
+}
+return r[e];
+}
+o.keys = function() {
+return Object.keys(r);
+}, o.resolve = i, e.exports = o, o.id = 368;
+},
+369: function(e, t) {
+e.exports = {
+choose_newsletter: "Choose newsletters in the list.",
+email_please: "Your e-mail?"
+};
+},
+399: function(e, t, n) {
+n(400), e.exports = n(135);
+},
+400: function(e, t, n) {
+n(365).initNewsletterForm();
+},
+5: function(e, t, n) {
+var r = n(2), o = n(12), i = n(0).lang, s = n(1);
+s.i18n.add("", n(13)("./" + i + ".yml")), s.i18n.add("error.network", n(15)("./" + i + ".yml")), 
+document.addEventListener("xhrfail", function(e) {
+new r.Error(e.reason);
+}), e.exports = function(e) {
+var t = new XMLHttpRequest(), n = e.method || "GET", r = e.body, i = e.url;
+t.open(n, i, !e.sync), t.method = n;
+var a = o();
+a && !e.skipCsrf && t.setRequestHeader("X-XSRF-TOKEN", a), e.responseType && (t.responseType = e.responseType), 
+"[object Object]" == {}.toString.call(r) && (t.setRequestHeader("Content-Type", "application/json;charset=UTF-8"), 
+r = JSON.stringify(r)), e.noDocumentEvents || (t.addEventListener("loadstart", function(e) {
+t.timeStart = Date.now();
+var n = u("xhrstart", e);
+document.dispatchEvent(n);
+}), t.addEventListener("loadend", function(e) {
+var t = u("xhrend", e);
+document.dispatchEvent(t);
+}), t.addEventListener("success", function(e) {
+var t = u("xhrsuccess", e);
+t.result = e.result, document.dispatchEvent(t);
+}), t.addEventListener("fail", function(e) {
+var t = u("xhrfail", e);
+t.reason = e.reason, document.dispatchEvent(t);
+})), e.raw || t.setRequestHeader("Accept", "application/json"), t.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+var c = e.normalStatuses || [ 200 ];
+function u(e, t) {
+var n = new CustomEvent(e);
+return n.originalEvent = t, n;
+}
+function l(e, n) {
+var r = u("fail", n);
+r.reason = e, t.dispatchEvent(r);
+}
+return t.addEventListener("error", function(e) {
+l(s("error.network.server_connection_error"), e);
+}), t.addEventListener("timeout", function(e) {
+l(s("error.network.server_request_timeout"), e);
+}), t.addEventListener("abort", function(e) {
+l(s("error.network.request_aborted"), e);
+}), t.addEventListener("load", function(n) {
+if (t.status) if (c.includes(t.status)) {
+var r = e.responseType && "text" !== e.responseType ? t.response : t.responseText;
+if ((t.getResponseHeader("Content-Type") || "").match(/^application\/json/) || e.json) try {
+r = JSON.parse(r);
+} catch (n) {
+return void l(s("error.network.invalid_format"), n);
+}
+!function(e, n) {
+var r = u("success", n);
+r.result = e, t.dispatchEvent(r);
+}(r, n);
+} else l(s("error.network.server_error", {
+status: t.status
+}), n); else l(s("error.network.no_response"), n);
+}), setTimeout(function() {
+t.send(r);
+}, 0), t;
+};
+},
+51: function(e, t) {
+e.exports = function(e, t) {
+var n, r = (n = e) % 10 == 1 && n % 100 != 11 ? "one" : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) && n == Math.floor(n) ? "few" : n % 10 == 0 || n % 10 >= 5 && n % 10 <= 9 || n % 100 >= 11 && n % 100 <= 14 && n == Math.floor(n) ? "many" : "other", o = t.split(",");
+switch (r) {
+case "one":
+return o[0];
+
+case "few":
+return o[1];
+
+case "many":
+return o[2];
+
+default:
+throw new Error("Unsupported count: " + e);
+}
+};
+},
+6: function(e, t, n) {
+e.exports = n(7);
+},
+7: function(e, t, n) {
+"use strict";
+function r(e) {
+return (r = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(e) {
+return typeof e;
+} : function(e) {
+return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e;
+})(e);
+}
+var o = n(8), i = n(9);
+function s(e) {
+return Object.prototype.toString.call(e);
+}
+function a(e) {
+return "[object String]" === s(e);
+}
+function c(e) {
+return !isNaN(e) && isFinite(e);
+}
+function u(e) {
+return !0 === e || !1 === e;
+}
+function l(e) {
+return "[object Object]" === s(e);
+}
+var f = Array.isArray || function(e) {
+return "[object Array]" === s(e);
+}, p = Array.prototype.forEach;
+function h(e, t, n) {
+if (null !== e) if (p && e.forEach === p) e.forEach(t, n); else if (e.length === +e.length) for (var r = 0, o = e.length; r < o; r += 1) t.call(n, e[r], r, e); else for (var i in e) Object.prototype.hasOwnProperty.call(e, i) && t.call(n, e[i], i, e);
+}
+var d = /%[sdj%]/g;
+function v(e) {
+var t = 1, n = arguments, r = n.length;
+return String(e).replace(d, function(e) {
+if ("%%" === e) return "%";
+if (t >= r) return e;
+switch (e) {
+case "%s":
+return String(n[t++]);
+
+case "%d":
+return Number(n[t++]);
+
+case "%j":
+return JSON.stringify(n[t++]);
+
+default:
+return e;
+}
+});
+}
+var m = "en";
+function y(e) {
+var t = {};
+return h(e || {}, function(e, n) {
+e && "object" === r(e) ? h(y(e), function(e, r) {
+t[n + "." + r] = e;
+}) : t[n] = e;
+}), t;
+}
+var g = "#@$";
+function b(e, t) {
+return e + g + t;
+}
+function _(e, t, n) {
+var r = b(t, n), o = e._storage;
+if (o.hasOwnProperty(r)) return r;
+if (t === e._defaultLocale) return null;
+var i = e._fallbacks_cache;
+if (i.hasOwnProperty(r)) return i[r];
+for (var s, a = e._fallbacks[t] || [ e._defaultLocale ], c = 0, u = a.length; c < u; c++) if (s = b(a[c], n), 
+o.hasOwnProperty(s)) return i[r] = s, i[r];
+return i[r] = null, null;
+}
+function w(e, t, n) {
+var r = i.indexOf(e, t);
+return -1 === r ? v('[pluralizer for "%s" locale not found]', e) : void 0 === n[r] ? v('[plural form %d ("%s") not found in translation]', r, i.forms(e)[r]) : n[r];
+}
+function k(e) {
+if (!(this instanceof k)) return new k(e);
+this._defaultLocale = e ? String(e) : m, this._fallbacks = {}, this._fallbacks_cache = {}, 
+this._storage = {}, this._plurals_cache = {};
+}
+k.prototype.addPhrase = function(e, t, n, r) {
+var o, i = this;
+if (u(r)) o = r ? 1 / 0 : 0; else if (c(r)) {
+if ((o = Math.floor(r)) < 0) throw new TypeError("Invalid flatten level (should be >= 0).");
+} else o = 1 / 0;
+if (l(n) && o > 0) return h(n, function(n, r) {
+i.addPhrase(e, (t ? t + "." : "") + r, n, o - 1);
+}), this;
+if (a(n)) this._storage[b(e, t)] = {
+translation: n,
+locale: e,
+raw: !1
+}; else {
+if (!(f(n) || c(n) || u(n) || 0 === o && l(n))) throw new TypeError("Invalid translation - [String|Object|Array|Number|Boolean] expected.");
+this._storage[b(e, t)] = {
+translation: n,
+locale: e,
+raw: !0
+};
+}
+return i._fallbacks_cache = {}, this;
+}, k.prototype.setFallback = function(e, t) {
+var n = this._defaultLocale;
+if (n === e) throw new Error("Default locale can't have fallbacks");
+var r = f(t) ? t.slice() : [ t ];
+return r[r.length - 1] !== n && r.push(n), this._fallbacks[e] = r, this._fallbacks_cache = {}, 
+this;
+};
+var F = /#\{|\(\(|\\\\/;
+k.prototype.translate = function(e, t, n) {
+var r, i = _(this, e, t);
+return i ? (r = this._storage[i]).raw ? r.translation : (r.hasOwnProperty("compiled") || (r.compiled = function(e, t, n) {
+var r, i, s, a, c, u;
+return F.test(t) ? 1 === (r = o.parse(t)).length && "literal" === r[0].type ? r[0].text : (e._plurals_cache[n] || (e._plurals_cache[n] = new k(n)), 
+u = e._plurals_cache[n], (i = []).push([ 'var str = "", strict, strict_exec, forms, forms_exec, plrl, cache, loc, loc_plzr, anchor;' ]), 
+i.push("params = flatten(params);"), h(r, function(e) {
+if ("literal" !== e.type) {
+if ("variable" === e.type) return s = e.anchor, void i.push(v('str += ("undefined" === typeof (params[%j])) ? "[missed variable: %s]" : params[%j];', s, s, s));
+if ("plural" !== e.type) throw new Error("Unknown node type");
+s = e.anchor, a = {}, h(e.strict, function(t, r) {
+var i = o.parse(t);
+if (1 === i.length && "literal" === i[0].type) return a[r] = !1, void (e.strict[r] = i[0].text);
+a[r] = !0, u.hasPhrase(n, t, !0) || u.addPhrase(n, t, t);
+}), c = {}, h(e.forms, function(t, r) {
+var i, s = o.parse(t);
+if (1 === s.length && "literal" === s[0].type) return i = s[0].text, e.forms[r] = i, 
+void (c[i] = !1);
+c[t] = !0, u.hasPhrase(n, t, !0) || u.addPhrase(n, t, t);
+}), i.push(v("loc = %j;", n)), i.push(v("loc_plzr = %j;", n.split(/[-_]/)[0])), 
+i.push(v("anchor = params[%j];", s)), i.push(v("cache = this._plurals_cache[loc];")), 
+i.push(v("strict = %j;", e.strict)), i.push(v("strict_exec = %j;", a)), i.push(v("forms = %j;", e.forms)), 
+i.push(v("forms_exec = %j;", c)), i.push("if (+(anchor) != anchor) {"), i.push(v('  str += "[invalid plurals amount: %s(" + anchor + ")]";', s)), 
+i.push("} else {"), i.push("  if (strict[anchor] !== undefined) {"), i.push("    plrl = strict[anchor];"), 
+i.push("    str += strict_exec[anchor] ? cache.t(loc, plrl, params) : plrl;"), i.push("  } else {"), 
+i.push("    plrl = pluralizer(loc_plzr, +anchor, forms);"), i.push("    str += forms_exec[plrl] ? cache.t(loc, plrl, params) : plrl;"), 
+i.push("  }"), i.push("}");
+} else i.push(v("str += %j;", e.text));
+}), i.push("return str;"), new Function("params", "flatten", "pluralizer", i.join("\n"))) : t;
+}(this, r.translation, r.locale)), "[object Function]" !== s(r.compiled) ? r.compiled : ((c(n) || a(n)) && (n = {
+count: n,
+value: n
+}), r.compiled.call(this, n, y, w))) : e + ": No translation for [" + t + "]";
+}, k.prototype.hasPhrase = function(e, t, n) {
+return n ? this._storage.hasOwnProperty(b(e, t)) : !!_(this, e, t);
+}, k.prototype.getLocale = function(e, t, n) {
+if (n) return this._storage.hasOwnProperty(b(e, t)) ? e : null;
+var r = _(this, e, t);
+return r ? r.split(g, 2)[0] : null;
+}, k.prototype.t = k.prototype.translate, k.prototype.stringify = function(e) {
+var t = this, n = {};
+h(this._storage, function(e, t) {
+n[t.split(g)[1]] = !0;
+});
+var r = {};
+h(n, function(n, o) {
+var i = _(t, e, o);
+if (i) {
+var s = t._storage[i].locale;
+r[s] || (r[s] = {}), r[s][o] = t._storage[i].translation;
+}
+});
+var o = {
+fallback: {},
+locales: r
+}, i = (t._fallbacks[e] || []).slice(0, -1);
+return i.length && (o.fallback[e] = i), JSON.stringify(o);
+}, k.prototype.load = function(e) {
+var t = this;
+return a(e) && (e = JSON.parse(e)), h(e.locales, function(e, n) {
+h(e, function(e, r) {
+t.addPhrase(n, r, e, 0);
+});
+}), h(e.fallback, function(e, n) {
+t.setFallback(n, e);
+}), this;
+}, e.exports = k;
+},
+8: function(e, t) {
+e.exports = function() {
+function e(e, t, n, r, o, i) {
+this.message = e, this.expected = t, this.found = n, this.offset = r, this.line = o, 
+this.column = i, this.name = "SyntaxError";
+}
+return function(e, t) {
+function n() {
+this.constructor = e;
+}
+n.prototype = t.prototype, e.prototype = new n();
+}(e, Error), {
+SyntaxError: e,
+parse: function(t) {
+var n, r = arguments.length > 1 ? arguments[1] : {}, o = {}, i = {
+start: le
+}, s = le, a = o, c = "((", u = {
+type: "literal",
+value: "((",
+description: '"(("'
+}, l = "))", f = {
+type: "literal",
+value: "))",
+description: '"))"'
+}, p = null, h = function(e, t) {
+return {
+type: "plural",
+forms: function(e) {
+for (var t = [], n = 0; n < e.length; n++) void 0 === e[n].strict && t.push(e[n].text);
+return t;
+}(e),
+strict: function(e) {
+for (var t = {}, n = 0; n < e.length; n++) void 0 !== e[n].strict && (t[e[n].strict] = e[n].text);
+return t;
+}(e),
+anchor: t || "count"
+};
+}, d = "|", v = {
+type: "literal",
+value: "|",
+description: '"|"'
+}, m = function(e, t) {
+return [ e ].concat(t);
+}, y = function(e) {
+return [ e ];
+}, g = "=", b = {
+type: "literal",
+value: "=",
+description: '"="'
+}, _ = /^[0-9]/, w = {
+type: "class",
+value: "[0-9]",
+description: "[0-9]"
+}, k = " ", F = {
+type: "literal",
+value: " ",
+description: '" "'
+}, x = function(e, t) {
+return {
+strict: e.join(""),
+text: t.join("")
+};
+}, E = function() {
+return {
+text: se()
+};
+}, S = "\\", j = {
+type: "literal",
+value: "\\",
+description: '"\\\\"'
+}, O = /^[\\|)(]/, A = {
+type: "class",
+value: "[\\\\|)(]",
+description: "[\\\\|)(]"
+}, C = function(e) {
+return e;
+}, T = void 0, L = {
+type: "any",
+description: "any character"
+}, P = function() {
+return se();
+}, q = ":", M = {
+type: "literal",
+value: ":",
+description: '":"'
+}, z = function(e) {
+return e;
+}, U = "#{", N = {
+type: "literal",
+value: "#{",
+description: '"#{"'
+}, D = "}", R = {
+type: "literal",
+value: "}",
+description: '"}"'
+}, H = function(e) {
+return {
+type: "variable",
+anchor: e
+};
+}, I = ".", J = {
+type: "literal",
+value: ".",
+description: '"."'
+}, $ = function() {
+return se();
+}, B = /^[a-zA-Z_$]/, V = {
+type: "class",
+value: "[a-zA-Z_$]",
+description: "[a-zA-Z_$]"
+}, W = /^[a-zA-Z0-9_$]/, X = {
+type: "class",
+value: "[a-zA-Z0-9_$]",
+description: "[a-zA-Z0-9_$]"
+}, Z = function(e) {
+return e;
+}, G = function(e) {
+return {
+type: "literal",
+text: e.join("")
+};
+}, Y = /^[\\#()|]/, K = {
+type: "class",
+value: "[\\\\#()|]",
+description: "[\\\\#()|]"
+}, Q = 0, ee = 0, te = 0, ne = {
+line: 1,
+column: 1,
+seenCR: !1
+}, re = 0, oe = [], ie = 0;
+if ("startRule" in r) {
+if (!(r.startRule in i)) throw new Error("Can't start parsing from rule \"" + r.startRule + '".');
+s = i[r.startRule];
+}
+function se() {
+return t.substring(ee, Q);
+}
+function ae(e) {
+return te !== e && (te > e && (te = 0, ne = {
+line: 1,
+column: 1,
+seenCR: !1
+}), function(e, n, r) {
+var o, i;
+for (o = n; o < r; o++) "\n" === (i = t.charAt(o)) ? (e.seenCR || e.line++, e.column = 1, 
+e.seenCR = !1) : "\r" === i || "\u2028" === i || "\u2029" === i ? (e.line++, e.column = 1, 
+e.seenCR = !0) : (e.column++, e.seenCR = !1);
+}(ne, te, e), te = e), ne;
+}
+function ce(e) {
+Q < re || (Q > re && (re = Q, oe = []), oe.push(e));
+}
+function ue(n, r, o) {
+var i = ae(o), s = o < t.length ? t.charAt(o) : null;
+return null !== r && function(e) {
+var t = 1;
+for (e.sort(function(e, t) {
+return e.description < t.description ? -1 : e.description > t.description ? 1 : 0;
+}); t < e.length; ) e[t - 1] === e[t] ? e.splice(t, 1) : t++;
+}(r), new e(null !== n ? n : function(e, t) {
+var n, r = new Array(e.length);
+for (n = 0; n < e.length; n++) r[n] = e[n].description;
+return "Expected " + (e.length > 1 ? r.slice(0, -1).join(", ") + " or " + r[e.length - 1] : r[0]) + " but " + (t ? '"' + function(e) {
+function t(e) {
+return e.charCodeAt(0).toString(16).toUpperCase();
+}
+return e.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\x08/g, "\\b").replace(/\t/g, "\\t").replace(/\n/g, "\\n").replace(/\f/g, "\\f").replace(/\r/g, "\\r").replace(/[\x00-\x07\x0B\x0E\x0F]/g, function(e) {
+return "\\x0" + t(e);
+}).replace(/[\x10-\x1F\x80-\xFF]/g, function(e) {
+return "\\x" + t(e);
+}).replace(/[\u0180-\u0FFF]/g, function(e) {
+return "\\u0" + t(e);
+}).replace(/[\u1080-\uFFFF]/g, function(e) {
+return "\\u" + t(e);
+});
+}(t) + '"' : "end of input") + " found.";
+}(r, s), r, s, o, i.line, i.column);
+}
+function le() {
+var e, t;
+for (e = [], (t = ye()) === o && (t = fe()) === o && (t = de()); t !== o; ) e.push(t), 
+(t = ye()) === o && (t = fe()) === o && (t = de());
+return e;
+}
+function fe() {
+var e, n, r, i, s;
+return e = Q, t.substr(Q, 2) === c ? (n = c, Q += 2) : (n = o, 0 === ie && ce(u)), 
+n !== o && (r = function e() {
+var n, r, i, s;
+return n = Q, (r = pe()) !== o ? (124 === t.charCodeAt(Q) ? (i = d, Q++) : (i = o, 
+0 === ie && ce(v)), i !== o && (s = e()) !== o ? (ee = n, r = m(r, s), n = r) : (Q = n, 
+n = a)) : (Q = n, n = a), n === o && (n = Q, (r = pe()) !== o && (ee = n, r = y(r)), 
+n = r), n;
+}()) !== o ? (t.substr(Q, 2) === l ? (i = l, Q += 2) : (i = o, 0 === ie && ce(f)), 
+i !== o ? ((s = function() {
+var e, n, r;
+return e = Q, 58 === t.charCodeAt(Q) ? (n = q, Q++) : (n = o, 0 === ie && ce(M)), 
+n !== o && (r = ve()) !== o ? (ee = e, n = z(r), e = n) : (Q = e, e = a), e;
+}()) === o && (s = p), s !== o ? (ee = e, e = n = h(r, s)) : (Q = e, e = a)) : (Q = e, 
+e = a)) : (Q = e, e = a), e;
+}
+function pe() {
+var e, n, r, i, s, c;
+if (e = Q, 61 === t.charCodeAt(Q) ? (n = g, Q++) : (n = o, 0 === ie && ce(b)), n !== o) {
+if (r = [], _.test(t.charAt(Q)) ? (i = t.charAt(Q), Q++) : (i = o, 0 === ie && ce(w)), 
+i !== o) for (;i !== o; ) r.push(i), _.test(t.charAt(Q)) ? (i = t.charAt(Q), Q++) : (i = o, 
+0 === ie && ce(w)); else r = a;
+if (r !== o) if (32 === t.charCodeAt(Q) ? (i = k, Q++) : (i = o, 0 === ie && ce(F)), 
+i === o && (i = p), i !== o) {
+if (s = [], (c = he()) !== o) for (;c !== o; ) s.push(c), c = he(); else s = a;
+s !== o ? (ee = e, e = n = x(r, s)) : (Q = e, e = a);
+} else Q = e, e = a; else Q = e, e = a;
+} else Q = e, e = a;
+if (e === o) {
+if (e = Q, n = [], (r = he()) !== o) for (;r !== o; ) n.push(r), r = he(); else n = a;
+n !== o && (ee = e, n = E()), e = n;
+}
+return e;
+}
+function he() {
+var e, n, r;
+return e = Q, 92 === t.charCodeAt(Q) ? (n = S, Q++) : (n = o, 0 === ie && ce(j)), 
+n !== o ? (O.test(t.charAt(Q)) ? (r = t.charAt(Q), Q++) : (r = o, 0 === ie && ce(A)), 
+r !== o ? (ee = e, e = n = C(r)) : (Q = e, e = a)) : (Q = e, e = a), e === o && (e = Q, 
+n = Q, ie++, 124 === t.charCodeAt(Q) ? (r = d, Q++) : (r = o, 0 === ie && ce(v)), 
+r === o && (t.substr(Q, 2) === l ? (r = l, Q += 2) : (r = o, 0 === ie && ce(f))), 
+ie--, r === o ? n = T : (Q = n, n = a), n !== o ? (t.length > Q ? (r = t.charAt(Q), 
+Q++) : (r = o, 0 === ie && ce(L)), r !== o ? (ee = e, e = n = P()) : (Q = e, e = a)) : (Q = e, 
+e = a)), e;
+}
+function de() {
+var e, n, r, i;
+return e = Q, t.substr(Q, 2) === U ? (n = U, Q += 2) : (n = o, 0 === ie && ce(N)), 
+n !== o && (r = ve()) !== o ? (125 === t.charCodeAt(Q) ? (i = D, Q++) : (i = o, 
+0 === ie && ce(R)), i !== o ? (ee = e, e = n = H(r)) : (Q = e, e = a)) : (Q = e, 
+e = a), e;
+}
+function ve() {
+var e, n, r, i;
+if (e = Q, me() !== o) if (46 === t.charCodeAt(Q) ? (n = I, Q++) : (n = o, 0 === ie && ce(J)), 
+n !== o) {
+if (r = [], (i = ve()) !== o) for (;i !== o; ) r.push(i), i = ve(); else r = a;
+r !== o ? (ee = e, e = $()) : (Q = e, e = a);
+} else Q = e, e = a; else Q = e, e = a;
+return e === o && (e = me()), e;
+}
+function me() {
+var e, n, r, i;
+if (e = Q, B.test(t.charAt(Q)) ? (n = t.charAt(Q), Q++) : (n = o, 0 === ie && ce(V)), 
+n !== o) {
+for (r = [], W.test(t.charAt(Q)) ? (i = t.charAt(Q), Q++) : (i = o, 0 === ie && ce(X)); i !== o; ) r.push(i), 
+W.test(t.charAt(Q)) ? (i = t.charAt(Q), Q++) : (i = o, 0 === ie && ce(X));
+r !== o ? (ee = e, e = n = P()) : (Q = e, e = a);
+} else Q = e, e = a;
+return e;
+}
+function ye() {
+var e, t, n, r, i;
+if (e = Q, t = [], n = Q, r = Q, ie++, (i = fe()) === o && (i = de()), ie--, i === o ? r = T : (Q = r, 
+r = a), r !== o && (i = ge()) !== o ? (ee = n, n = r = Z(i)) : (Q = n, n = a), n !== o) for (;n !== o; ) t.push(n), 
+n = Q, r = Q, ie++, (i = fe()) === o && (i = de()), ie--, i === o ? r = T : (Q = r, 
+r = a), r !== o && (i = ge()) !== o ? (ee = n, n = r = Z(i)) : (Q = n, n = a); else t = a;
+return t !== o && (ee = e, t = G(t)), e = t;
+}
+function ge() {
+var e, n, r;
+return e = Q, 92 === t.charCodeAt(Q) ? (n = S, Q++) : (n = o, 0 === ie && ce(j)), 
+n !== o ? (Y.test(t.charAt(Q)) ? (r = t.charAt(Q), Q++) : (r = o, 0 === ie && ce(K)), 
+r !== o ? (ee = e, e = n = C(r)) : (Q = e, e = a)) : (Q = e, e = a), e === o && (t.length > Q ? (e = t.charAt(Q), 
+Q++) : (e = o, 0 === ie && ce(L))), e;
+}
+if ((n = s()) !== o && Q === t.length) return n;
+throw n !== o && Q < t.length && ce({
+type: "end",
+description: "end of input"
+}), ue(null, oe, re);
+}
+};
+}();
+},
+9: function(e, t, n) {
+"use strict";
+var r = {};
+function o(e) {
+var t;
+return r[e] ? e : (t = e.toLowerCase().replace("_", "-"), r[t] ? t : (t = t.split("-")[0], 
+r[t] ? t : null));
+}
+function i(e, t) {
+var n = o(e);
+if (!n) return -1;
+if (!r[n].cFn) return 0;
+var i = String(t), s = i.indexOf(".") < 0 ? "" : i.split(".")[1], a = s.length, c = +t, u = +i.split(".")[0], l = 0 === s.length ? 0 : +s.replace(/0+$/, "");
+return r[n].cFn(c, u, a, +s, l);
+}
+function s(e, t) {
+var n = o(e);
+if (!n) return -1;
+if (!r[n].oFn) return 0;
+var i = String(t), s = i.indexOf(".") < 0 ? "" : i.split(".")[1], a = s.length, c = +t, u = +i.split(".")[0], l = 0 === s.length ? 0 : +s.replace(/0+$/, "");
+return r[n].oFn(c, u, a, +s, l);
+}
+e.exports = function(e, t) {
+var n = o(e);
+return n ? r[n].c[i(n, t)] : null;
+}, e.exports.indexOf = i, e.exports.forms = function(e) {
+var t = o(e);
+return r[t] ? r[t].c : null;
+}, e.exports.ordinal = function(e, t) {
+var n = o(e);
+return r[n] ? r[n].o[s(n, t)] : null;
+}, e.exports.ordinal.indexOf = s, e.exports.ordinal.forms = function(e) {
+var t = o(e);
+return r[t] ? r[t].o : null;
+};
+var a = [ "zero", "one", "two", "few", "many", "other" ];
+function c(e) {
+return a[e];
+}
+function u(e, t) {
+var n;
+for (t.c = t.c ? t.c.map(c) : [ "other" ], t.o = t.o ? t.o.map(c) : [ "other" ], 
+n = 0; n < e.length; n++) r[e[n]] = t;
+}
+function l(e, t, n) {
+return e <= n && n <= t && n % 1 == 0;
+}
+function f(e, t) {
+return e.indexOf(t) >= 0;
+}
+u([ "af", "asa", "bem", "bez", "bg", "brx", "ce", "cgg", "chr", "ckb", "dv", "ee", "el", "eo", "es", "eu", "fo", "fur", "gsw", "ha", "haw", "jgo", "jmc", "kaj", "kcg", "kkj", "kl", "ks", "ksb", "ku", "ky", "lb", "lg", "mas", "mgo", "ml", "mn", "nah", "nb", "nd", "nn", "nnh", "no", "nr", "ny", "nyn", "om", "or", "os", "pap", "ps", "rm", "rof", "rwk", "saq", "sdh", "seh", "sn", "so", "ss", "ssy", "st", "syr", "ta", "te", "teo", "tig", "tk", "tn", "tr", "ts", "ug", "uz", "ve", "vo", "vun", "wae", "xh", "xog" ], {
+c: [ 1, 5 ],
+cFn: function(e) {
+return 1 === e ? 0 : 1;
+}
+}), u([ "ak", "bh", "guw", "ln", "mg", "nso", "pa", "ti", "wa" ], {
+c: [ 1, 5 ],
+cFn: function(e) {
+return l(0, 1, e) ? 0 : 1;
+}
+}), u([ "am", "fa", "kn", "zu" ], {
+c: [ 1, 5 ],
+cFn: function(e, t) {
+return 0 === t || 1 === e ? 0 : 1;
+}
+}), u([ "ar", "ars" ], {
+c: [ 0, 1, 2, 3, 4, 5 ],
+cFn: function(e) {
+var t = e % 100;
+return 0 === e ? 0 : 1 === e ? 1 : 2 === e ? 2 : l(3, 10, t) ? 3 : l(11, 99, t) ? 4 : 5;
+}
+}), u([ "as", "bn" ], {
+c: [ 1, 5 ],
+cFn: function(e, t) {
+return 0 === t || 1 === e ? 0 : 1;
+},
+o: [ 1, 2, 3, 4, 5 ],
+oFn: function(e) {
+return f([ 1, 5, 7, 8, 9, 10 ], e) ? 0 : f([ 2, 3 ], e) ? 1 : 4 === e ? 2 : 6 === e ? 3 : 4;
+}
+}), u([ "ast", "de", "et", "fi", "fy", "gl", "ji", "nl", "sw", "ur", "yi" ], {
+c: [ 1, 5 ],
+cFn: function(e, t, n) {
+return 1 === t && 0 === n ? 0 : 1;
+}
+}), u([ "az" ], {
+c: [ 1, 5 ],
+cFn: function(e) {
+return 1 === e ? 0 : 1;
+},
+o: [ 1, 3, 4, 5 ],
+oFn: function(e, t) {
+var n = t % 10, r = t % 100, o = t % 1e3;
+return f([ 1, 2, 5, 7, 8 ], n) || f([ 20, 50, 70, 80 ], r) ? 0 : f([ 3, 4 ], n) || f([ 100, 200, 300, 400, 500, 600, 700, 800, 900 ], o) ? 1 : 0 === t || 6 === n || f([ 40, 60, 90 ], r) ? 2 : 3;
+}
+}), u([ "be" ], {
+c: [ 1, 3, 4, 5 ],
+cFn: function(e) {
+var t = e % 10, n = e % 100;
+return 1 === t && 11 !== n ? 0 : l(2, 4, t) && !l(12, 14, n) ? 1 : 0 === t || l(5, 9, t) || l(11, 14, n) ? 2 : 3;
+},
+o: [ 3, 5 ],
+oFn: function(e) {
+var t = e % 100;
+return f([ 2, 3 ], e % 10) && !f([ 12, 13 ], t) ? 0 : 1;
+}
+}), u([ "bm", "bo", "dz", "id", "ig", "ii", "in", "ja", "jbo", "jv", "jw", "kde", "kea", "km", "ko", "lkt", "my", "nqo", "root", "sah", "ses", "sg", "th", "to", "wo", "yo", "yue", "zh" ], {}), 
+u([ "br" ], {
+c: [ 1, 2, 3, 4, 5 ],
+cFn: function(e) {
+var t = e % 10, n = e % 100, r = e % 1e6;
+return 1 !== t || f([ 11, 71, 91 ], n) ? 2 !== t || f([ 12, 72, 92 ], n) ? !l(3, 4, t) && 9 !== t || l(10, 19, n) || l(70, 79, n) || l(90, 99, n) ? 0 !== e && 0 === r ? 3 : 4 : 2 : 1 : 0;
+}
+}), u([ "bs", "hr", "sh", "sr" ], {
+c: [ 1, 3, 5 ],
+cFn: function(e, t, n, r) {
+var o = t % 10, i = t % 100, s = r % 10, a = r % 100;
+return 0 === n && 1 === o && 11 !== i || 1 === s && 11 !== a ? 0 : 0 === n && l(2, 4, o) && !l(12, 14, i) || l(2, 4, s) && !l(12, 14, a) ? 1 : 2;
+}
+}), u([ "ca" ], {
+c: [ 1, 5 ],
+cFn: function(e, t, n) {
+return 1 === t && 0 === n ? 0 : 1;
+},
+o: [ 1, 2, 3, 5 ],
+oFn: function(e) {
+return f([ 1, 3 ], e) ? 0 : 2 === e ? 1 : 4 === e ? 2 : 3;
+}
+}), u([ "cs", "sk" ], {
+c: [ 1, 3, 4, 5 ],
+cFn: function(e, t, n) {
+return 1 === t && 0 === n ? 0 : l(2, 4, t) && 0 === n ? 1 : 0 !== n ? 2 : 3;
+}
+}), u([ "cy" ], {
+c: [ 0, 1, 2, 3, 4, 5 ],
+cFn: function(e) {
+return 0 === e ? 0 : 1 === e ? 1 : 2 === e ? 2 : 3 === e ? 3 : 6 === e ? 4 : 5;
+},
+o: [ 0, 1, 2, 3, 4, 5 ],
+oFn: function(e) {
+return f([ 0, 7, 8, 9 ], e) ? 0 : 1 === e ? 1 : 2 === e ? 2 : f([ 3, 4 ], e) ? 3 : f([ 5, 6 ], e) ? 4 : 5;
+}
+}), u([ "da" ], {
+c: [ 1, 5 ],
+cFn: function(e, t, n, r, o) {
+return 1 === e || 0 !== o && f([ 0, 1 ], t) ? 0 : 1;
+}
+}), u([ "dsb", "hsb" ], {
+c: [ 1, 2, 3, 5 ],
+cFn: function(e, t, n, r) {
+var o = t % 100, i = r % 100;
+return 0 === n && 1 === o || 1 === i ? 0 : 0 === n && 2 === o || 2 === i ? 1 : 0 === n && l(3, 4, o) || l(3, 4, i) ? 2 : 3;
+}
+}), u([ "en" ], {
+c: [ 1, 5 ],
+cFn: function(e, t, n) {
+return 1 === t && 0 === n ? 0 : 1;
+},
+o: [ 1, 2, 3, 5 ],
+oFn: function(e) {
+var t = e % 10, n = e % 100;
+return 1 === t && 11 !== n ? 0 : 2 === t && 12 !== n ? 1 : 3 === t && 13 !== n ? 2 : 3;
+}
+}), u([ "ff", "kab" ], {
+c: [ 1, 5 ],
+cFn: function(e, t) {
+return f([ 0, 1 ], t) ? 0 : 1;
+}
+}), u([ "fil", "tl" ], {
+c: [ 1, 5 ],
+cFn: function(e, t, n, r) {
+var o = t % 10, i = r % 10;
+return 0 === n && f([ 1, 2, 3 ], t) || 0 === n && !f([ 4, 6, 9 ], o) || 0 !== n && !f([ 4, 6, 9 ], i) ? 0 : 1;
+},
+o: [ 1, 5 ],
+oFn: function(e) {
+return 1 === e ? 0 : 1;
+}
+}), u([ "fr", "hy" ], {
+c: [ 1, 5 ],
+cFn: function(e, t) {
+return f([ 0, 1 ], t) ? 0 : 1;
+},
+o: [ 1, 5 ],
+oFn: function(e) {
+return 1 === e ? 0 : 1;
+}
+}), u([ "ga" ], {
+c: [ 1, 2, 3, 4, 5 ],
+cFn: function(e) {
+return 1 === e ? 0 : 2 === e ? 1 : l(3, 6, e) ? 2 : l(7, 10, e) ? 3 : 4;
+},
+o: [ 1, 5 ],
+oFn: function(e) {
+return 1 === e ? 0 : 1;
+}
+}), u([ "gd" ], {
+c: [ 1, 2, 3, 5 ],
+cFn: function(e) {
+return f([ 1, 11 ], e) ? 0 : f([ 2, 12 ], e) ? 1 : l(3, 10, e) || l(13, 19, e) ? 2 : 3;
+}
+}), u([ "gu", "hi" ], {
+c: [ 1, 5 ],
+cFn: function(e, t) {
+return 0 === t || 1 === e ? 0 : 1;
+},
+o: [ 1, 2, 3, 4, 5 ],
+oFn: function(e) {
+return 1 === e ? 0 : f([ 2, 3 ], e) ? 1 : 4 === e ? 2 : 6 === e ? 3 : 4;
+}
+}), u([ "gv" ], {
+c: [ 1, 2, 3, 4, 5 ],
+cFn: function(e, t, n) {
+var r = t % 10;
+return 0 === n && 1 === r ? 0 : 0 === n && 2 === r ? 1 : 0 === n && f([ 0, 20, 40, 60, 80 ], t % 100) ? 2 : 0 !== n ? 3 : 4;
+}
+}), u([ "he", "iw" ], {
+c: [ 1, 2, 4, 5 ],
+cFn: function(e, t, n) {
+var r = e % 10;
+return 1 === t && 0 === n ? 0 : 2 === t && 0 === n ? 1 : 0 !== n || l(0, 10, e) || 0 !== r ? 3 : 2;
+}
+}), u([ "hu" ], {
+c: [ 1, 5 ],
+cFn: function(e) {
+return 1 === e ? 0 : 1;
+},
+o: [ 1, 5 ],
+oFn: function(e) {
+return f([ 1, 5 ], e) ? 0 : 1;
+}
+}), u([ "is" ], {
+c: [ 1, 5 ],
+cFn: function(e, t, n, r, o) {
+return 0 === o && 1 === t % 10 && 11 !== t % 100 || 0 !== o ? 0 : 1;
+}
+}), u([ "it" ], {
+c: [ 1, 5 ],
+cFn: function(e, t, n) {
+return 1 === t && 0 === n ? 0 : 1;
+},
+o: [ 4, 5 ],
+oFn: function(e) {
+return f([ 11, 8, 80, 800 ], e) ? 0 : 1;
+}
+}), u([ "iu", "kw", "naq", "se", "sma", "smi", "smj", "smn", "sms" ], {
+c: [ 1, 2, 5 ],
+cFn: function(e) {
+return 1 === e ? 0 : 2 === e ? 1 : 2;
+}
+}), u([ "ka" ], {
+c: [ 1, 5 ],
+cFn: function(e) {
+return 1 === e ? 0 : 1;
+},
+o: [ 1, 4, 5 ],
+oFn: function(e, t) {
+var n = t % 100;
+return 1 === t ? 0 : 0 === t || l(2, 20, n) || 40 === n || 60 === n || 80 === n ? 1 : 2;
+}
+}), u([ "kk" ], {
+c: [ 1, 5 ],
+cFn: function(e) {
+return 1 === e ? 0 : 1;
+},
+o: [ 4, 5 ],
+oFn: function(e) {
+var t = e % 10;
+return 6 === t || 9 === t || 0 === t && 0 !== e ? 0 : 1;
+}
+}), u([ "ksh" ], {
+c: [ 0, 1, 5 ],
+cFn: function(e) {
+return 0 === e ? 0 : 1 === e ? 1 : 2;
+}
+}), u([ "lag" ], {
+c: [ 0, 1, 5 ],
+cFn: function(e, t) {
+return 0 === e ? 0 : f([ 0, 1 ], t) && 0 !== e ? 1 : 2;
+}
+}), u([ "lo", "ms", "vi" ], {
+o: [ 1, 5 ],
+oFn: function(e) {
+return 1 === e ? 0 : 1;
+}
+}), u([ "lt" ], {
+c: [ 1, 3, 4, 5 ],
+cFn: function(e, t, n, r) {
+var o = e % 10, i = e % 100;
+return 1 !== o || l(11, 19, i) ? l(2, 9, o) && !l(11, 19, i) ? 1 : 0 !== r ? 2 : 3 : 0;
+}
+}), u([ "lv", "prg" ], {
+c: [ 0, 1, 5 ],
+cFn: function(e, t, n, r) {
+var o = e % 10, i = e % 100, s = r % 100, a = r % 10;
+return 0 === o || l(11, 19, i) || 2 === n && l(11, 19, s) ? 0 : 1 === o && 11 !== i || 2 === n && 1 === a && 11 !== s || 2 !== n && 1 === a ? 1 : 2;
+}
+}), u([ "mk" ], {
+c: [ 1, 5 ],
+cFn: function(e, t, n, r) {
+return 0 === n && 1 === t % 10 || 1 === r % 10 ? 0 : 1;
+},
+o: [ 1, 2, 4, 5 ],
+oFn: function(e, t) {
+var n = t % 10, r = t % 100;
+return 1 === n && 11 !== r ? 0 : 2 === n && 12 !== r ? 1 : f([ 7, 8 ], n) && !f([ 17, 18 ], r) ? 2 : 3;
+}
+}), u([ "mo", "ro" ], {
+c: [ 1, 3, 5 ],
+cFn: function(e, t, n) {
+return 1 === t && 0 === n ? 0 : 0 !== n || 0 === e || 1 !== e && l(1, 19, e % 100) ? 1 : 2;
+},
+o: [ 1, 5 ],
+oFn: function(e) {
+return 1 === e ? 0 : 1;
+}
+}), u([ "mr" ], {
+c: [ 1, 5 ],
+cFn: function(e, t) {
+return 0 === t || 1 === e ? 0 : 1;
+},
+o: [ 1, 2, 3, 5 ],
+oFn: function(e) {
+return 1 === e ? 0 : f([ 2, 3 ], e) ? 1 : 4 === e ? 2 : 3;
+}
+}), u([ "mt" ], {
+c: [ 1, 3, 4, 5 ],
+cFn: function(e) {
+var t = e % 100;
+return 1 === e ? 0 : 0 === e || l(2, 10, t) ? 1 : l(11, 19, t) ? 2 : 3;
+}
+}), u([ "ne" ], {
+c: [ 1, 5 ],
+cFn: function(e) {
+return 1 === e ? 0 : 1;
+},
+o: [ 1, 5 ],
+oFn: function(e) {
+return l(1, 4, e) ? 0 : 1;
+}
+}), u([ "pl" ], {
+c: [ 1, 3, 4, 5 ],
+cFn: function(e, t, n) {
+var r = t % 10, o = t % 100;
+return 1 === t && 0 === n ? 0 : 0 === n && l(2, 4, r) && !l(12, 14, o) ? 1 : 0 === n && 1 !== t && l(0, 1, r) || 0 === n && l(5, 9, r) || 0 === n && l(12, 14, o) ? 2 : 3;
+}
+}), u([ "pt" ], {
+c: [ 1, 5 ],
+cFn: function(e) {
+return l(0, 2, e) && 2 !== e ? 0 : 1;
+}
+}), u([ "pt-pt" ], {
+c: [ 1, 5 ],
+cFn: function(e, t, n) {
+return 1 === e && 0 === n ? 0 : 1;
+}
+}), u([ "ru" ], {
+c: [ 1, 3, 4, 5 ],
+cFn: function(e, t, n) {
+var r = t % 10, o = t % 100;
+return 0 === n && 1 === r && 11 !== o ? 0 : 0 === n && l(2, 4, r) && !l(12, 14, o) ? 1 : 0 === n && 0 === r || 0 === n && l(5, 9, r) || 0 === n && l(11, 14, o) ? 2 : 3;
+}
+}), u([ "shi" ], {
+c: [ 1, 3, 5 ],
+cFn: function(e, t) {
+return 0 === t || 1 === e ? 0 : l(2, 10, e) ? 1 : 2;
+}
+}), u([ "si" ], {
+c: [ 1, 5 ],
+cFn: function(e, t, n, r) {
+return f([ 0, 1 ], e) || 0 === t && 1 === r ? 0 : 1;
+}
+}), u([ "sl" ], {
+c: [ 1, 2, 3, 5 ],
+cFn: function(e, t, n) {
+var r = t % 100;
+return 0 === n && 1 === r ? 0 : 0 === n && 2 === r ? 1 : 0 === n && l(3, 4, r) || 0 !== n ? 2 : 3;
+}
+}), u([ "sq" ], {
+c: [ 1, 5 ],
+cFn: function(e) {
+return 1 === e ? 0 : 1;
+},
+o: [ 1, 4, 5 ],
+oFn: function(e) {
+return 1 === e ? 0 : 4 === e % 10 && 14 !== e % 100 ? 1 : 2;
+}
+}), u([ "sv" ], {
+c: [ 1, 5 ],
+cFn: function(e, t, n) {
+return 1 === t && 0 === n ? 0 : 1;
+},
+o: [ 1, 5 ],
+oFn: function(e) {
+var t = e % 100;
+return f([ 1, 2 ], e % 10) && !f([ 11, 12 ], t) ? 0 : 1;
+}
+}), u([ "tzm" ], {
+c: [ 1, 5 ],
+cFn: function(e) {
+return l(0, 1, e) || l(11, 99, e) ? 0 : 1;
+}
+}), u([ "uk" ], {
+c: [ 1, 3, 4, 5 ],
+cFn: function(e, t, n) {
+var r = t % 10, o = t % 100;
+return 0 === n && 1 === r && 11 !== o ? 0 : 0 === n && l(2, 4, r) && !l(12, 14, o) ? 1 : 0 === n && 0 === r || 0 === n && l(5, 9, r) || 0 === n && l(11, 14, o) ? 2 : 3;
+},
+o: [ 3, 5 ],
+oFn: function(e) {
+return 3 === e % 10 && 13 !== e % 100 ? 0 : 1;
+}
+});
+}
+});

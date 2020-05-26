@@ -1,0 +1,16 @@
+npm -v 
+node -v
+
+//To update your npm the latest version, type this into your terminal:
+npm install npm@latest -g
+
+//Use this to create a new project
+npm init     ;; this commend will create a package.JSON file.
+
+// Install a specific version of node.JSON
+(1) Clear NPM's cache: sudo npm cache clean -f
+(2) Install a little helper called 'n': sudo npm install -g n
+(3) Install latest stable Node.js version: sudo n stable
+(3b) Alternatively pick a specific version and install like this:
+     sudo n 0.8.20
+

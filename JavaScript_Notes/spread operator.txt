@@ -1,0 +1,14 @@
+Spread Operator ...
+
+Extracting key/value pairs of one object and adding them as children of another object is a very common scenario.
+
+const obj1 = { dog: 'woof' };
+const obj2 = { cat: 'meow' };
+console.log({ ...obj1, ...obj2 }); // prints { dog: 'woof', cat: 'meow' }
+
+The great part is, this also works seamlessly with arrays: 
+const arr1 = [1, 2];
+const arr2 = [3, 4];
+console.log([ ...arr1, ...arr2 ]); // prints [1, 2, 3, 4]
+
+It’s probably not the most important recent JS feature, but it’s one of my favorites.

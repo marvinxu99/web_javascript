@@ -1,0 +1,110 @@
+Intro to SQL: Querying and managing data:
+https://www.khanacademy.org/computing/computer-programming/sql
+
+knex.js for PostgreSQL:
+http://knexjs.org/#Transactions
+
+- createdb  'table name'
+- psql 'table name'
+
+- superuser: postgres/winter 
+- port: 3002  (5432 not working)
+
+- psql is PostgreSQL interactive terminal
+
+start the psql:
+> psql -U postgres -d dbname   OR
+> psql --userame postgres --dbname test
+> psql -d testdb
+
+- use DBeaver to create a role Marvin/winter
+- right click on the database, then choose create a new role
+
+
+
+https://www.tutorialspoint.com/postgresql/postgresql_quick_guide.htm
+
+CREATE TABLE users (name text, age smallint, birthday date);
+INSERT INTO users (name, age, birthday) values ('andrei', 31, '1930-01-25');
+SELECT * from users;
+
+ALTER TABLE users ADD score smallint;
+
+UPDATE tablename SET some_column = some_value WHERE some_name = name
+UPDATE users SET score = 75 WHERE name = 'john';
+
+UPDATE accounts SET contact_first_name = first_name,
+                    contact_last_name = last_name
+  FROM salesmen WHERE salesmen.id = accounts.sales_id;
+  
+
+SELECT * FROM users WHERE name LIKE 'a%';   /* 'a*' does not work */
+
+SELECT * FROM users ORDER BY score ASC;
+
+\d    - display tables in the database.
+
+SELECT * FROM users JOIN login ON users.name = login.name;
+
+DELETE FROM users where name='sally';
+
+DROP TABLE  login;
+
+
+************************************************************************************
+(1) Installing PostgreSQL: http://www.postgresqltutorial.com/install-postgresql/
+
+   Installation Directory: C:\Program Files\PostgreSQL\11
+  Server Installation Directory: C:\Program Files\PostgreSQL\11
+
+(2)Creating a Database Cluster
+
+
+(3) initdb -D \users\marvin\pgsql\data
+
+   ** this database system will be owned by user "Marvin"
+   ** max_connections...100
+   ** default shared buffer...128MB
+   ** Enabling "trust" authentication for local connections. 
+      - you can change this  bu editing pg_hba.conf or 
+        using the option -A or --auth-local and --auth-host, the next time you run initdb
+
+(4) Start the database server using:
+   - pg_ctl -D \users\marvin\pgsql\data -l logfile start
+   
+   postgres -p3002 -D \users\marvin\pgsql\data
+
+First, you need to find the PostgreSQL database directory, it can be something like C:\Program Files\PostgreSQL\11\data. 
+Then open Command Prompt and execute this command:
+
+(a) To start the server
+pg_ctl -D "C:\Program Files\PostgreSQL\11\data" start
+
+(b) To stop the server
+pg_ctl -D "C:\Program Files\PostgreSQL\11\data" stop
+
+(c) To restart the server:
+pg_ctl -D "C:\Program Files\PostgreSQL\11\data" restart
+
+(d) Check the status for errors
+
+ pg_ctl -D "C:\Program Files\PostgreSQL\11\data" status 
+ 
+ 
+ 
+Another way:
+
+Open Run Window by Winkey + R
+Type services.msc
+Search Postgres service based on version installed.
+Click stop, start or restart the service option.
+
+
+
+When it's first installed, PostgreSQL just has the 'postgres' user, and the way to initially enter PostgreSQL is by typing  sudo su - postgres , and then psql .  After Andrei creates the 'test' database, we can create a user with the same name as our current logged in user, to be a database administrator. This way we can just type in psql 'test'  from the command line and enter the database without the need of logging in as the 'postgres' user, just like Andrei does in the lecture. 
+
+This can be done with CREATE USER your-user-name-here WITH SUPERUSER; , and we can verify that he was created with \du . Now we can exit by typing \q  and then exit , and enter our database just like Andrei does, with psql 'test' . 
+
+Lastly, with pgAdmin4 we need to create a connection with the server the first time we use it, and this is done by right-clicking 'Servers' on the left pane, and choosing 'Create' > 'Server'. We give our server a name, and in the 'Connection' tab we type in 'localhost' as the host, just like Andrei shows in the lecture, and press 'Save'. 
+
+

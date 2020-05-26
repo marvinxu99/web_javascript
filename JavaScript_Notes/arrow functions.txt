@@ -1,0 +1,8 @@
+Aside from being far more concise, arrow functions have much more practical scoping behavior. Arrow functions inherit this from the scope they were defined in.
+
+In some cases, arrow functions can be even more concise: 
+
+const added = [0, 1, 2, 3, 4].map((item) => item + 1);
+console.log(added) // prints "[1, 2, 3, 4, 5]"
+
+Arrow functions that reside on a single line include a implicit return statement. There is no need for brackets or semi-colons with single line arrow functions.

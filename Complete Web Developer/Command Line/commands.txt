@@ -1,0 +1,18 @@
+ls   - list all files and folders  (windows DIR)
+pwd - present working directory
+cd
+cd ..
+cls  - clear the terminal screen
+
+cd /      to root directory
+cd ~       to user directory
+mkdir  foldername
+open .    - open the current folder
+touch index.html     - create a file
+open index.html    
+open - a "Sublime text" index.html
+
+mv index.html about.html   - rename a file's name
+
+rm  about.html       - remove a file
+ rm - r foldername   - remove a folder

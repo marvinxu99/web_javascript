@@ -48,11 +48,29 @@ h1 {
 
 .left_arm { 
 	margin-right: 10px; 
+	transition: all 1s;
 } 
 
 .right_arm { 
 	margin-left: 10px; 
+	transition: all 1s;	
 } 
+
+.left_arm:hover {
+	-webkit-transform: rotate(-20deg);
+    -moz-transform: rotate(-20deg);
+    -o-transform: rotate(-20deg);
+    -ms-transform: rotate(-20deg);
+    transform: rotate(20deg);
+}
+
+.right_arm:hover {
+	-webkit-transform: rotate(-20deg);
+    -moz-transform: rotate(-20deg);
+    -o-transform: rotate(-20deg);
+    -ms-transform: rotate(-20deg);
+    transform: rotate(-20deg);
+}
 
 .torso { 
 	width: 200px; 

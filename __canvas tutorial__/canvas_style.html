@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style type="text/css">
+    canvas { border: 1px solid black; }
+  </style>
+</head>
+ 
+ <body onload="draw();">
+  <div>
+    <canvas id="canvas" width="400" height="400"></canvas>
+  </div>
+
+  <script type="application/javascript">
+    function draw() {
+      var ctx = document.getElementById('canvas').getContext('2d');
+
+      // fillstyle example
+      for (var i = 0; i < 6; i++) {
+        for (var j = 0; j < 6; j++) {
+          ctx.fillStyle = 'rgb(' + Math.floor(255 - 42.5 * i) + ', ' +
+                          Math.floor(255 - 42.5 * j) + ', 0)';
+          ctx.fillRect(j * 25, i * 25, 25, 25);
+        }
+      }
+
+      // strokestyle example
+      const y_offset = 200
+      for (var i = 0; i < 6; i++) {
+        for (var j = 0; j < 6; j++) {
+          ctx.strokeStyle = 'rgb(0, ' + Math.floor(255 - 42.5 * i) + ', ' + 
+                          Math.floor(255 - 42.5 * j) + ')';
+          ctx.beginPath();
+          ctx.arc(12.5 + j * 25, 12.5 + i * 25 + y_offset, 10, 0, Math.PI * 2, true);
+          ctx.stroke();
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style type="text/css">
+    canvas { border: 1px solid black; }
+  </style>
+</head>
+ 
+ <body onload="draw();">
+  <div>
+    <canvas id="canvas" width="450" height="500"></canvas>
+  </div>
+
+  <script type="application/javascript">
+    function draw() {
+      var canvas = document.getElementById('canvas');
+      if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+
+        var rectangle = new Path2D();
+        rectangle.rect(10, 10, 50, 50);
+
+        var circle = new Path2D();
+        circle.moveTo(125, 35);
+        circle.arc(100, 35, 25, 0, 2 * Math.PI);
+
+        ctx.stroke(rectangle);
+        ctx.fill(circle);
+
+        // Using SVG paths
+        var p = new Path2D('M10 100 h 80 v 80 h -80 Z');
+        ctx.stroke(p);
+        const p2 = new Path2D("M 10 315 \
+           L 110 215 \
+           A 30 50 0 0 1 162.55 162.45 \
+           L 172.55 152.45 \
+           A 30 50 -45 0 1 215.1 109.9 \
+           L 315 10");
+        ctx.fillStyle = 'rgb(102, 204, 0, 0.5)';
+        //ctx.strokeStyle = 'rgb(102, 204, 0, 0.5)';
+        ctx.stroke(p2);
+        ctx.fill(p2);
+      }      
+    }
+  </script>
+
+</body>
+</html>
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style type="text/css">
+    canvas { border: 1px solid black; }
+  </style>
+</head>
+ 
+ <body onload="draw();">
+  <div>
+    <canvas id="canvas" width="500" height="850"></canvas>
+  </div>
+
+  <script type="application/javascript">
+    function draw() {
+      var ctx = document.getElementById('canvas').getContext('2d');
+      ctx.font = '48px serif';
+      ctx.fillText('Hello world', 10, 50);
+      ctx.strokeText('Hello world', 10, 125);
+
+      // draw image
+      const img = new Image();   // Create new img element
+      img.src = 'data:image/gif;base64,R0lGODlhCwALAIAAAAAA3pn/ZiH5BAEAAAEALAAAAAALAAsAAAIUhA+hkcuO4lmNVindo7qyrIXiGBYAOw=='; 
+      img.onload = () => {
+        ctx.drawImage(img, 10, 200)
+      }
+
+      const img2 = new Image();   // Create new img element
+      img2.addEventListener('load', () => {
+        ctx.drawImage(img2, 10, 300)
+      }, false);
+      img2.src = 'winter_logo.png'; // Set source path
+    }
+
+
+  </script>
+
+</body>
+</html>
+

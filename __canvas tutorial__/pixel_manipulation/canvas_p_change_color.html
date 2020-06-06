@@ -56,13 +56,13 @@
         var x = event.layerX;
         var y = event.layerY;
         zoomctx.drawImage(canvas,
-                          Math.min(Math.max(0, x - 10), img.width - 20),
-                          Math.min(Math.max(0, y - 10), img.height - 20),
-                          20, 20,
+                          Math.min(Math.max(0, x - 25), img.width - 50),
+                          Math.min(Math.max(0, y - 25), img.height - 50),
+                          50, 50,
                           0, 0,
                           200, 200);
       };
-      //canvas.addEventListener('mousemove', zoom);
+      canvas.addEventListener('mousemove', zoom);
 
       // change colour
       var curr_color = 'red';   // default

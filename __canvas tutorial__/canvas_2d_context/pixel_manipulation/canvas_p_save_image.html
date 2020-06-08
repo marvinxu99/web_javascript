@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style type="text/css">
+    canvas { border: 1px solid black; }
+  </style>
+</head>
+ 
+ <body>
+  <canvas id="myCanvas" width="578" height="200" style="display:none;"></canvas>
+  <img id="canvasImg" alt="Right click to save me!">
+  <div>
+    <a id="btn-save-image">Save Image</a>
+  </div>
+  
+  <script>
+    var canvas = document.getElementById('myCanvas');
+    var context = canvas.getContext('2d');
+
+    // draw cloud
+    context.beginPath();
+    context.moveTo(170, 80);
+    context.bezierCurveTo(130, 100, 130, 150, 230, 150);
+    context.bezierCurveTo(250, 180, 320, 180, 340, 150);
+    context.bezierCurveTo(420, 150, 420, 120, 390, 100);
+    context.bezierCurveTo(430, 40, 370, 30, 340, 50);
+    context.bezierCurveTo(320, 5, 250, 20, 250, 50);
+    context.bezierCurveTo(200, 5, 150, 20, 170, 80);
+    context.closePath();
+    context.lineWidth = 5;
+    context.fillStyle = '#8ED6FF';
+    context.fill();
+    context.strokeStyle = '#0000ff';
+    context.stroke();
+
+    // save canvas image as data url (png format by default)
+    var dataURL = canvas.toDataURL();
+
+    // set canvasImg image src to dataURL
+    // so it can be saved as an image
+    document.getElementById('canvasImg').src = dataURL;
+
+
+    var btn_save_img = document.getElementById("btn-save-image");
+    function save_image(){
+      var imgageData = dataURL;
+
+      // Now browser starts downloading it instead of just showing it
+      // var newData = imgageData.replace("image/png", "image/octet-stream");
+      //btn_save_img.setAttribute("href", newData);
+      btn_save_img.setAttribute("href", imgageData);
+      btn_save_img.setAttribute("download", "winn_downloaded.png");
+    };
+    btn_save_img.addEventListener('click', save_image());
+
+  </script>
+</body>
+
+</body>
+</html>
+

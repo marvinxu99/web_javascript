@@ -26,11 +26,17 @@
   
   <script type="application/javascript">
     var img = new Image();
-    //img.src = 'rhino.jpg';
     img.src ="burn-rule-of-nines.png"
     img.onload = function() {
       draw(this);
+
+      console.log('img width =' + img.width); 
+      console.log('img height =' + img.height);
+      console.log('img naturalWidth =' + img.naturalWidth); 
+      console.log('img naturealhHeight =' + img.naturalHeight);
+
     };
+
 
     function draw(img) {
       

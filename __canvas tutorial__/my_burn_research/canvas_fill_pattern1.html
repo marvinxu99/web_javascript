@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" media="all" href="css/reset.css" /> <!-- reset css -->
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
+<style>
+    body{ background-color: ivory; padding:20px; }
+    canvas{border:1px solid red;}
+</style>
+
+<script>
+$(function(){
+
+    // get canvas references (canvas=collar, canvas1=texture)
+    var canvas=document.getElementById("canvas");
+    var ctx=canvas.getContext("2d");
+    var canvas1=document.getElementById("canvas1");
+    var ctx1=canvas1.getContext("2d");
+
+    // preload the texture and collar images before starting
+
+    var textureImg,collarImg;
+    var imageURLs=[];
+    var imagesOK=0;
+    var imgs=[];
+    imageURLs.push("checkered.png");
+    imageURLs.push("collar.png");
+    loadAllImages();
+
+    function loadAllImages(callback){
+        for (var i = 0; i < imageURLs.length; i++) {
+            var img = new Image();
+            img.crossOrigin="anonymous";
+            imgs.push(img);
+            img.onload = function(){ 
+                imagesOK++; 
+                if (imagesOK==imageURLs.length ) {
+                      textureImg=imgs[0];
+                      collarImg=imgs[1];
+                      start();
+                }
+            }; 
+            img.src = imageURLs[i];
+        }      
+    }
+
+
+    function start(){
+
+        // set both canvas dimensions
+        canvas.width=collarImg.width;
+        canvas.height=collarImg.height+5;
+        canvas1.width=textureImg.width;
+        canvas1.height=textureImg.height;
+
+        // draw the textureImg on canvas1
+        ctx1.drawImage(textureImg,0,0,canvas1.width,canvas1.height);
+
+        // curve the texture into a collar shaped curved 
+        curveTexture(collarImg.width,collarImg.height);
+
+        // draw the collarImg on canvas
+        ctx.drawImage(collarImg,0,0);
+
+        // set compositing to source-atop
+        // any new drawing will ONLY fill existing non-transparent pixels
+        ctx.globalCompositeOperation="source-atop";
+
+        // draw the curved texture from canvas1 onto the collar of canvas
+        // (the existing pixels are the collar, so only the collar is filled)
+        ctx.drawImage(canvas1,0,0);
+
+
+
+    }
+
+    function curveTexture(w,h){
+
+        // define a quadratic curve that fits the collar bottom
+        // These values change if the collar image changes (+5,-32)
+        var x0=0;
+        var y0=h+5;
+        var cx=w/2;
+        var cy=h-32;
+        var x1=w;
+        var y1=h+5;
+
+        // get a,b,c for quadratic equation
+        // equation is used to offset columns of texture pixels
+        // in the same shape as the collar
+        var Q=getQuadraticEquation(x0,y0,cx,cy,x1,y1);
+
+        // get the texture canvas pixel data
+        // 2 copies to avoid self-referencing
+        var imageData0 = ctx1.getImageData(0,0,w,h);
+        var data0 = imageData0.data;
+        var imageData1 = ctx1.getImageData(0,0,w,h);
+        var data1 = imageData1.data;
+
+        // loop thru each vertical column of pixels
+        // Offset the pixel column into the shape of the quad-curve
+        for(var y=0; y<h; y++) {
+          for(var x=0; x<w; x++) {
+
+              // the pixel to write
+              var n=((w*y)+x)*4;
+              // the vertical offset amount
+              var yy=parseInt(y+h-(Q.a * x*x + Q.b*x + Q.c));
+              // the offset pixel to read
+              var nn=((w*yy)+x)*4;
+
+              // offset this pixel by the quadCurve Y value (yy)
+              data0[n+0]=data1[nn+0];
+              data0[n+1]=data1[nn+1];
+              data0[n+2]=data1[nn+2];
+              data0[n+3]=data1[nn+3];
+          }
+        }
+        ctx1.putImageData(imageData0,0,0);
+    }
+
+
+    // Quadratic Curve: given x coordinate, find y coordinate
+    function getQuadraticY(x,Q){
+        return(Q.a * x*x + Q.b*x + Q.c);
+    }
+
+    // Quadratic Curve: 
+    // Given: start,control,end points
+    // Find: a,b,c in quadratic equation ( y=a*x*x+b*x+c )
+    function getQuadraticEquation(x0,y0,cx,cy,x2,y2){
+        // need 1 more point on q-curve, so calc its midpoint XY
+        // Note: since T=0.5 therefore TT=(1-T)=0.5 also [so could simplify]
+        var T=0.50;
+        var TT=1-T;
+        var x1=TT*TT*x0+2*TT*T*cx+T*T*x2;
+        var y1=TT*TT*y0+2*TT*T*cy+T*T*y2;
+        var A = ((y1-y0)*(x0-x2) 
+              + (y2-y0)*(x1-x0))/((x0-x2)*(x1*x1-x0*x0) 
+              + (x1-x0)*(x2*x2-x0*x0));
+        var B = ((y1-y0)-A*(x1*x1-x0*x0))/(x1-x0);
+        var C = y0-A*x0*x0-B*x0;
+        return({a:A,b:B,c:C});
+    }
+
+
+}); // end $(function(){});
+</script>
+
+</head>
+
+<body>
+    <p>"Curve" a texture by offsetting Y pixels based on Q-curve</p>
+    <canvas id="canvas" width=300 height=300></canvas>
+    <p>The temporary texture canvas</p>
+    <canvas id="canvas1" width=300 height=300></canvas>
+</body>
+</html>

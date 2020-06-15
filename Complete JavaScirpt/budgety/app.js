@@ -269,13 +269,14 @@ var UIController = (function() {
             
             fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue);
             
+            // Convert javascript list to an array
             fieldsArr = Array.prototype.slice.call(fields);
             
             fieldsArr.forEach(function(current, index, array) {
                 current.value = "";
             });
             
-            fieldsArr[0].focus();
+            fieldsArr[0].focus();   // Set focus back to the first field.
         },
         
         

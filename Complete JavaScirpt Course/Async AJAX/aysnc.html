@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>Asynchronous JavaScript</title>
+  </head>
+  <body>
+    <script>
+      // const second = () =>{
+      //   setTimeout(() => {
+      //     console.log("async here")
+      //   }, 2000);
+      // }
+
+      // const first = () => {
+      //   console.log("First");
+      //   second();
+      //   console.log("The end");
+      // }
+
+      // first();
+
+      // function getRecipe() {
+      //   setTimeout(() =>{
+      //     const recipeID = [ 523, 883, 423, 974]
+      //     console.log(recipeID);
+
+      //     setTimeout((id)=>{
+      //       const recipe = {
+      //         title: "Frehs tomato pasta",
+      //         publisher: "Joans" 
+      //       };
+      //       console.log(`${id}: ${recipe.title}`);
+      //     }, 1000, recipeID[2]);
+      //   }, 2000);
+      // }
+      // getRecipe();
+
+      const getIDs = new Promise((resolve, reject) => {
+          setTimeout(() => {
+              resolve([ 523, 883, 423, 974]);
+              //reject([ 523, 883, 423, 974]);
+            }, 1500)          
+      });
+      
+      const getRecipe = recID => {
+        return new Promise((resolve, reject) => {
+          setTimeout(ID => {
+            const recipe = {
+              title: "Fresh tomato pasta",
+              publisher: "Jonas"
+            };
+            resolve(`${ID}: ${recipe.title}`);
+          }, 1500, recID);
+        });
+      };
+
+      const getRelated = publisher => {
+        return new Promise((resolve, reject) => {
+          setTimeout(pub => {
+            const recipe = { 
+              title: "Italian Pizza",
+              publisher: "Jonas"
+            };
+            resolve(`${pub}: ${recipe.title}`);
+          }, 1500, publisher);
+        });
+      };
+      
+      // getIDs
+      // .then(IDs => {
+      //     console.log(IDs);
+      //     return getRecipe(IDs[2]);
+      // })
+      // .then(recipe =>{
+      //   console.log(recipe);
+      //   return getRelated("Jonas");
+      // })
+      // .then(recipe => {
+      //   console.log(recipe);
+      // })
+      // .catch(error => {
+      //     console.log("error:", error);
+      // })
+
+      async function getRecipeAW() {
+          const IDs = await getIDs;
+          console.log(IDs);
+
+          const recipe = await getRecipe(IDs[2]);
+          console.log(recipe);
+
+          const related = await getRelated("Jonas");
+          console.log(related);
+
+          return recipe;
+      };
+      getRecipeAW()   // It returns a Promise
+      .then(result => console.log(`${result} is the best ever.`))
+
+    </script>
+  </body>
+</html>

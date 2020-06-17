@@ -154,7 +154,7 @@ box6.clickMe();
 const box66 = {
     color: 'green',
     position: 1,
-    clickMe: () => {
+    clickMe: () => {    // this does not work as this points to the windows object
         document.querySelector('.green').addEventListener('click', () => {
             var str = 'This is box number ' + this.position + ' and it is ' + this.color;
             alert(str);
@@ -162,6 +162,8 @@ const box66 = {
     }
 }
 box66.clickMe();
+
+
 function Person(name) {
     this.name = name;
 }
@@ -176,6 +178,7 @@ Person.prototype.myFriends5 = function(friends) {
 }
 var friends = ['Bob', 'Jane', 'Mark'];
 new Person('John').myFriends5(friends);
+
 // ES6
 Person.prototype.myFriends6 = function(friends) {
     var arr = friends.map(el => `${this.name} is friends with ${el}`);

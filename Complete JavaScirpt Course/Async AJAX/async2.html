@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>Asynchronous JavaScript</title>
+  </head>
+  <body>
+    <script>
+
+      // function getPeople(id) {
+      //   fetch(`https://swapi.dev/api/people/${id}/`)
+      //   .then(result => result.json())
+      //   .then(data => {
+      //     console.log(data);
+      //   })
+      //   .catch(err => console.log(err));     
+      // };
+      // getPeople(1);
+      // getPeople(2);
+      // getPeople(3);
+
+      async function getPeopleAW(id) {
+        try {
+            const result = await fetch(`https://swapi.dev/api/people/${id}/`);
+            const data = await result.json();
+            console.log(data);
+            console.log(`${id}: ${data.name}`);
+
+            return data;
+        } catch(error) {
+            console.log(error);
+        }
+      };
+
+      getPeopleAW(1);
+      getPeopleAW(2).then(data => {
+        console.log(data.name);
+      });
+
+    </script>
+  </body>
+</html>

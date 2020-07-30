@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Jane's Calculator</title>
+    <style>
+			.number-field {
+				width: 50px;
+			}
+			.volume-field {
+				width: 70px;
+			}
+		</style>
+  </head>
+
+  <body>
+    <h1>Solution Calcultor:</h1>
+		
+		<h2>(1) If you have the following solution:</h2>
+		<div>			
+			<table>
+			<tr>
+				<td>Concentration:</td>
+        <td><input type="text" class="number-field" id="sol1-concentration" /> %</td>
+			</tr>
+			<tr>
+				<td>Solution Volume:</td> 
+				<td><input type="text" class="number-field"  id="sol1-volume" /> mL</td>
+			</tr>
+			</table>
+		</div>
+		
+		<h2>(2) Target solution:</h2>
+		<div>
+			Target concentration: <input type="text" class="number-field" id="sol2-concentration" /> %
+		</div>
+		<div>
+			</p>
+      <h2>(3) Click to calculate:</h2>
+      <button class="button" id="calc-volume" onclick="calc_vloume();">Calculate Volume</button>
+      <div id="msg_warning" style="display:none;color:red;"></div>
+			</p>
+		</div>
+		<div>
+			<h3>(4) You will need to add the following amount of water:</h3>
+			The Amount of water to add: <input type="number" id="sol2-volume" class="volume-field" disabled /> mL <br>
+			The total volume of the target solution will be <input type="number" id="sol2-total-volume" class="volume-field" disabled /> mL
+		</div>
+		
+  </body>
+
+	<script type="text/javascript">
+    function calc_vloume() {
+        var sol1_p = parseFloat(document.getElementById("sol1-concentration").value);
+        var sol1_v = parseFloat(document.getElementById("sol1-volume").value);
+        var sol2_p = parseFloat(document.getElementById("sol2-concentration").value);
+        console.log(sol1_p, sol1_v, sol2_p);
+
+        if (!sol1_v || !sol1_v || !sol2_p) {
+          var warning = document.getElementById("msg_warning")
+          warning.style.display = "block";
+          warning.innerHTML = "check the input fields. they must be numbers and cannot be empty."
+          
+        } else {
+
+          var sol2_volume = (sol1_v * sol1_p)/sol2_p - sol1_v;
+          var sol2_total = Number(sol2_volume) + Number(sol1_v);
+
+          document.getElementById("sol2-volume").value = sol2_volume.toFixed(2);
+          document.getElementById("sol2-total-volume").value = sol2_total.toFixed(2);
+          warning = document.getElementById("msg_warning")
+          warning.style.display = "none";
+
+        }
+    }	
+	</script>
+	
+</html>

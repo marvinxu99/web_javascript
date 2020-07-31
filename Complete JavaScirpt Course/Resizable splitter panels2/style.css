@@ -5,13 +5,13 @@
   #container {
 	position: absolute;
 	width: 100%;
-	height: 100%;
+	height: 86vh;
   }
   
   #left_pane,
   #right_pane {
 	top: 0;
-	height: 100%;
+	height: 86vh;
 	position: absolute;
 	padding: 10px;
 	color: black;

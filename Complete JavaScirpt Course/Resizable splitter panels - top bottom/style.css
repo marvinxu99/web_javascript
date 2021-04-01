@@ -1,0 +1,32 @@
+* {
+	box-sizing: border-box;
+  }
+  
+  #container {
+	position: absolute;
+	width: 100%;
+	height: 86vh;
+  }
+  
+  #left_pane,
+  #right_pane {
+	top: 0;
+	height: 86vh;
+	position: absolute;
+	padding: 10px;
+	color: black;
+  }
+  
+  #left_pane {
+	width: 25%;
+	left: 0;
+	background: lightgrey;
+	border-right: 2px solid black;
+  }
+  
+  #right_pane {
+	width: 75%;
+	right: 0;
+	background: white;
+  }
+  

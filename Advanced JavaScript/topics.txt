@@ -1,0 +1,10 @@
+
+execution environment 
+
+lexical environment
+
+hoisting
+
+fucntion expression
+
+functionn delaration

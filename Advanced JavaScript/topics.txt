@@ -8,3 +8,8 @@ hoisting
 fucntion expression
 
 functionn delaration
+
+***
+const and let are block scope
+var is not , still only function scope
+***

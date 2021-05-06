@@ -1,0 +1,6 @@
+IIFE - Immediately inovked function expression
+
+(function() {
+
+  
+})();

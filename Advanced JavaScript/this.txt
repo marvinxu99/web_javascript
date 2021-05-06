@@ -1,1 +1,7 @@
 "this" is the object that the function is a property of.
+
+//1: gives methods access to their object
+//2: execute same code for mulitple objects
+
+ 
+

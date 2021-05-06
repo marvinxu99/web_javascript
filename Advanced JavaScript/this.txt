@@ -3,5 +3,5 @@
 //1: gives methods access to their object
 //2: execute same code for mulitple objects
 
- 
+
 

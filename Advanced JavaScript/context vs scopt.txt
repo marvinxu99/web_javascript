@@ -1,0 +1,4 @@
+context - how a finction is invoked/executed. excution context
+
+scope - visibility of variables
+

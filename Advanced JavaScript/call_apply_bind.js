@@ -6,7 +6,6 @@ function a() {
 a.call()   // = a(); all function has this call() property
 
 
-
 const wizard = {
   name: 'Merlin',
   health: 100,
@@ -20,9 +19,10 @@ const archer = {
   health: 50
 }
 
-wizard.heal.call(archer, 50, 60)
-wizard.heal.apply(archer, [20, 30])
-archer
+
+wizard.heal.call(archer, 50, 60)    //call takes multiple arguments
+wizard.heal.apply(archer, [20, 30])  //apply takes an array as augument
+//archer
 // function borrowing
 
 const healArcher = wizard.heal.bind(archer, 50, 60);
@@ -39,3 +39,21 @@ function getMaxNumber(arr){
 }
 
 getMaxNumber(array)
+
+
+// bind example
+const character = {
+  name: 'Simon',
+  getCharacter() {
+    return this.name;
+  }
+};
+
+//const giveMeTheCharacterNOW = character.getCharacter;
+const giveMeTheCharacterNOW = character.getCharacter.bind(character);
+ 
+
+console.log('a', character.getCharacter())
+
+//How Would you fix this?
+console.log('?', giveMeTheCharacterNOW()); //this should return 'Simon' bud doesn't

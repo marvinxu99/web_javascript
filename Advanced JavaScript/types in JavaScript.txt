@@ -1,0 +1,23 @@
+Static vs Dynamically Typed
+Primitive Types
+Pass by reference vs Pass by value
+Type Coercion
+Arrays, Functions, Objects
+
+Types of 
+number
+boolean
+string
+undefined
+null    typeof null  object, it is a mistake – it should be ‘null’
+Symbol(‘just me’)    type of Symbol(‘just me’) – used to identify objects
+Object { }
+
+[] Array is an object. To check if it is an array, use Array.isArray().
+
+var c = [1,2,3,4,5];
+var d = [].concat(c);    // copy the arrary over
+
+let obj = { a: ‘a’, b: ‘b’, c: ‘c’ }
+let clone = Object.assign({}, obj)
+

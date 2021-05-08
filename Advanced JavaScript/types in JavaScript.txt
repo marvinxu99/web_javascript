@@ -18,6 +18,50 @@ Object { }
 var c = [1,2,3,4,5];
 var d = [].concat(c);    // copy the arrary over
 
-let obj = { a: ‘a’, b: ‘b’, c: ‘c’ }
+// Clone 
+let obj = { a: 'a', b: 'b', c: 'c' };
 let clone = Object.assign({}, obj)
+let clone2 = {...obj};    //Spread operator, new in javascript
 
+obj.c = 5;
+
+console.log(obj);
+console.log(clone);
+console.log(clone2);
+
+//Shallow clone
+let obj = { 
+	a: 'a', 
+	b: 'b', 
+	c: {deep: 'Try and copy me'} 
+    };
+let clone = Object.assign({}, obj)
+let clone2 = {...obj};    //Spread operator, new in javascript
+
+obj.c = 5;
+
+console.log(obj);
+console.log(clone);
+console.log(clone2);
+
+//Superclone
+let obj = { 
+	a: 'a', 
+	b: 'b', 
+	c: {deep: 'Try and copy me'} 
+    };
+let clone = Object.assign({}, obj)
+let clone2 = {...obj};    //Spread operator, new in javascript
+let superClone = JSON.parse(JSON.stringify(obj))
+
+obj.c.deep = 'hahahhahah';
+
+console.log(obj);
+console.log(clone);
+console.log(clone2);
+console.log(superClone);
+
+//*****************
+//Type coercion
+
+ 

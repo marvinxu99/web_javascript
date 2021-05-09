@@ -27,3 +27,5 @@ const multiplyByTwo = multiplyBy(2);
 const multiplyByTen = multiplyBy(10);
 
 multiplyByTwo(4);
+
+******************************

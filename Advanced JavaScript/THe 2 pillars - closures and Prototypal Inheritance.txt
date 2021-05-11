@@ -33,3 +33,50 @@ Lexical scope: Lexical scope means that in a nested group of functions, the inne
 have access to the variables and other resources of their parent scope. This means that 
 the child's functions are lexically bound to the execution context of their parents. 
 Lexical scope is sometimes also referred to as static scope.
+
+Closure benefits:
+(1) Memeory effiient
+
+function heavyDuty = (index) => {
+   const bigArray = new Array(70000).fill('mm');
+   return bigArray[index];
+}
+
+heavyDuty(688);
+heavyDuty(689);
+heavyDuty(700);
+-------------------------
+const getHeavyDuty() = heavyDuty2()
+getHeavyDuty(688);
+getHeavyDuty(689);
+getHeavyDuty(700);
+
+function heavyDuty2() {
+   const bigArray = new Array(70000).fill('mm');
+   return function (index) {
+	return bigArray[index];
+   }
+}
+
+
+(2) encapsulation
+
+let view;
+function initialize() {
+   let called = 0;
+
+   return function() {
+      if called > 0 {
+         return ;
+      } else {
+	view = "vv";
+        called++;
+        console.log('view has been set');
+      }
+}
+
+const startOnce = initialize();
+startOnce();
+
+
+

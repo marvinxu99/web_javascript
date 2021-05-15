@@ -1,0 +1,38 @@
+Benefits:
+- Clear + understandable
+- Easy to extend
+- easy to maintain
+- memory efficient
+- DRY - don't repeat yourself
+
+*******************************************
+//OOP: Factory Functions
+const elf = {
+    name: 'Erowell',
+    weapon: 'bow',
+    attack() {
+        return 'attack with ' + this.weapon;
+    }
+}
+
+elf.attack();
+
+******
+// Factory function to create an elf
+function createElf(name, weapon) {
+    return {
+        name: name,
+        weapon: weapon,
+        attack() {
+            return 'attack with ' + this.weapon;
+        }
+    }
+}
+
+const peter = createElf('Peter', 'stones');
+peter.attack();
+const sam = createElf('Sam', 'stones');
+sam.attack();
+
+****************************
+//OOP: Object.Create()

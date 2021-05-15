@@ -79,3 +79,23 @@ console.log(socrates);
 console.log(socrates.mortal); 
 console.log(human.isPrototypeOf(socrates));
 
+***************************************************
+// Date object => to have a new method .lastYear()
+// which shows you last year in 'YYYY' format
+Date.prototype.lastYear = function() {
+  return this.getFullYear() - 1;
+}
+new Date().lastYear();
+new Date('1998-10-10').lastYear();
+
+//Modify .map to print 'x' at the end of each item
+Array.prototype.map = function() {
+  let arr = [];
+  for(let i = 0; i < this.length; i++){
+    arr.push(this[i] + 'x');
+  }
+  return arr;
+}
+console.log([1,2,3].map());
+
+

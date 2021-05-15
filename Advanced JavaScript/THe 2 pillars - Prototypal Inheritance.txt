@@ -1,0 +1,5 @@
+Prototypal Inheritance:
+
+const array = [];
+array.__proto__
+array.__proto__.__proto__

@@ -6,7 +6,7 @@ Benefits:
 - DRY - don't repeat yourself
 
 *******************************************
-//OOP: Factory Functions
+//OOP1: Factory Functions
 const elf = {
     name: 'Erowell',
     weapon: 'bow',
@@ -35,4 +35,48 @@ const sam = createElf('Sam', 'stones');
 sam.attack();
 
 ****************************
-//OOP: Object.Create()
+//OOP2: Object.Create()
+const elfFunctions = {
+  attack: function() {
+    return 'atack with ' + this.weapon
+  }
+}
+function createElf(name, weapon) {
+  //Object.create creates __proto__ link
+  newElf = Object.create(elfFunctions)
+  newElf.name = name;
+  newElf.weapon = weapon
+  return newElf
+}
+
+const sam = createElf('Sam', 'bow');
+const peter = createElf('Peter', 'bow');
+sam.attack()
+
+****************************
+//OOP3: Contructor function
+//Constructor functions
+function Elf(name, weapon) {
+    this.name = name;
+    this.weapon = weapon;
+}
+
+Elf.prototype.attack = function() {
+    return 'attack with ' + this.weapon;
+}
+
+Elf.prototype.build = function() {
+   const self = this; 
+   function building() {
+      return self.name + ' builds a house';
+   }
+   return building();
+}
+
+const peter = new Elf('Peter', 'stones');
+console.log(peter.build());
+console.log(peter.attack());
+
+const sam = new Elf('Sam', 'fire');
+console.log(sam.attack());
+

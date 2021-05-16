@@ -13,6 +13,48 @@ function Person(name, age) {
 const person1 = new Person('Xavier', 55);
 person1
 
-//2. 
+//2. Implicit binding
+const person = {
+  name: 'Karen',
+  age: 40,
+  hi() {
+    console.log('hi' + this.name);
+  }
+}
 
+//3. explicit binding
+const person2 = {
+  name: 'Karen',
+  age: 40,
+  hi: function() {
+    console.log('hi' + this.setTimeout);
+  }.bind(window)
+}
+person2.hi();
 
+//4. arrow function
+// lexical scoped instead of dynamic scoped
+const person2 = {
+  name: 'Karen',
+  age: 40,
+  hi: function() {
+      var inner = () => {
+        console.log('hi ' + this.name);
+      }
+      return inner();
+  }
+}
+person2.hi();   // hi Karen
+
+//Using a regular function, this ==> window
+const person2 = {
+  name: 'Karen',
+  age: 40,
+  hi: function() {
+      function inner() {
+        console.log('hi ' + this.setTimeout);
+      }
+      return inner();
+  }
+}
+person2.hi();

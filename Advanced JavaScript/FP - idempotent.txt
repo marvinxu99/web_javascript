@@ -1,0 +1,12 @@
+//code is predictable
+//function always does what we expected it to do.
+function NotGood(num){
+  console.log(num);
+}
+
+notGood(5); 
+
+// HTTP API call --- always return the same results
+
+// A function looking up a customer's name and address in a database is typically 
+// idempotent, since this will not cause the database to change

@@ -1,0 +1,18 @@
+// Imperative vs declarative
+
+// Imperative code - computer need to tell exactly what to do and how to do it
+
+// Declarative code:  what to do and what should happend
+
+
+//Examples:
+ - machine code is imperative
+ - High level language (javascript) is declarative
+
+// more imperative 
+for(let i = 0; i<100; i++){
+   console.log(i);
+}
+
+// more declarative
+[1,2,3].forEach(item => console.log(item));

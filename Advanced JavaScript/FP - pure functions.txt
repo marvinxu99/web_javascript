@@ -1,0 +1,23 @@
+//always return the same reslut given the same inputs
+//no side effects
+
+
+const array = [1,2,3];
+
+function mutateArray(arr){
+    arr.pop();
+}
+
+function removeLastItem(arr){
+    const newArr = [].concat(arr);    //copy the array
+    newArr.pop();
+    return newArr;  
+}
+
+function multiplyBy2(arr){
+    return arr.map(item => item*2);
+}
+
+console.log(array);
+console.log(removeLastItem(array));
+console.log(multiplyBy2(array));

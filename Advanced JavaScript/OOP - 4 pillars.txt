@@ -1,0 +1,8 @@
+//encapsulation
+
+//Abstraction
+
+//Inheritance
+
+//Polymorphism
+

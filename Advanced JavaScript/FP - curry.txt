@@ -1,0 +1,25 @@
+// Currying
+const multiply = (a, b) =>a*b;
+const curriedMultiply = (a) => (b) => a*b; 
+
+const curriedMultiplyBy5 = curriedMultiply(5);
+
+//.... 10 years later
+curriedMultiplyBy5(4);
+
+
+*******************************
+// Partial application
+// taking a function and apply less parameters
+
+const multiply = (a, b, c) =>a*b*c;
+const curriedMultiply = (a) => (b) =>(c) => a*b*c; 
+
+curriedMultiply(3)(4)(5);
+
+//****************************************
+const partialMultiplyBy5 = multiply.bind(null, 5)
+partialMultiplyBy5(4, 10);
+
+const partialMultiply2 = multiply.bind(null, 5, 2)
+partialMultiply2(4);

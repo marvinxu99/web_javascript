@@ -6,6 +6,7 @@ hof2(function a(x){ return x });
 
 
 // Closure
+const closure = function () {
 
 
 

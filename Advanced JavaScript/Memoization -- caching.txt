@@ -23,7 +23,8 @@ function addTo80(n) {
     return n + 80;
 }
 
-function memoizedAddTo80(n) {
+
+function memoizedAddTo80() {
     let cache = {};
     
     return function(n) {

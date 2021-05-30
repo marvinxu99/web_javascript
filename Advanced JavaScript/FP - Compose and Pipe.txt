@@ -1,0 +1,18 @@
+//Compose (going from right to left)
+const compose = (f, g) =>(data) => f(g(data));
+const multipleBy3 = (num) => num * 3;
+const makePositive = (num) => Math.abs(num);
+
+const multipleBy3AndAbsolute = compose(multipleBy3, makePositive);
+
+multipleBy3AndAbsolute(-50);
+
+
+//Pipe (going from left to right)
+const pipe = (f, g) =>(data) => g(f(data));
+const multipleBy3 = (num) => num * 3;
+const makePositive = (num) => Math.abs(num);
+
+const multipleBy3AndAbsolute = pipe(multipleBy3, makePositive);
+
+multipleBy3AndAbsolute(-50);

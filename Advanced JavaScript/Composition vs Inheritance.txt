@@ -1,0 +1,12 @@
+
+//Inheritance
+// What it is; What things are 
+// - Tight coupling 
+// - Fragile base class problem 
+// - Hierarchy 
+
+
+
+//Composition
+// - What it has - what is does
+

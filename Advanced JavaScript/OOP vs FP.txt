@@ -1,0 +1,14 @@
+//FP
+- Many operations on fixed data
+- stateless
+- functions are pure
+- declarative
+
+
+
+
+//OOP
+- Few operations on comman data
+- stateful
+- side effects
+- imperative - how to do

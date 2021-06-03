@@ -1,0 +1,25 @@
+const promise = new Promise((resolve, reject) => {
+   if(true) {
+      resolve("hi, it works")
+   } else {
+       reject("no, it broke")
+   }
+});
+
+promise.then(result => {
+    console.log(result);
+})
+
+const promise2 = new Promise((resolve, reject) => {
+    setTimeout(resolve, 100, "hi, I waited 100 ms");
+});
+
+const promise3 = new Promise((resolve, reject) => {
+    setTimeout(resolve, 1000, "hi, I waited 1000 ms");
+});
+
+Promise.all([promise, promise2, promise3])
+    .then(results =>{
+        console.log(results);   
+    })
+

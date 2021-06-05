@@ -5,19 +5,15 @@
 </head>
 
 <body>
+<div>
 <button onclick="request()">Request Data</button>
+</div>
 
-<script>
-function request(){
-	fetch('https://jsonplaceholder.typicode.com/posts/1')
-    .then(res => res.json())
-    .then(res =>{
-        console.log(res);
-    });
-}
+<div style="margin-top: 20px">
+<button onclick="fetchUsers()">async await demo</button>
+</div>
 
-
-</script>
+<script src="async_await.js"></script>
 
 
 </body>

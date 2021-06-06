@@ -12,3 +12,36 @@ const arr2 = [3, 4];
 console.log([ ...arr1, ...arr2 ]); // prints [1, 2, 3, 4]
 
 It’s probably not the most important recent JS feature, but it’s one of my favorites.
+
+
+********************
+ES9 (ES2018) added support or object spread operator
+
+const animals = {
+    tiger: 23,
+    lion: 2,
+    moneky: 3,
+    bird: 4
+}
+
+function objectSpread(p1, p2, p3){
+    console.log(p1);
+    console.log(p2);
+    console.log(p3);
+}
+
+const { tiger, lion, ...rest} = animals;
+
+console.log(tiger);
+console.log(rest);
+objectSpread(tiger, lion, rest);
+
+
+************************
+const array1 = [1,2,3,4,5];
+
+function sum(a, b, c, d, e) {
+    return a + b + c + d + e;
+}
+
+sum(...array1);

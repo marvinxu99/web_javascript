@@ -24,5 +24,4 @@ var fightModule = (function() {
 		fight: fight,
 		
 	}
-
-}
+})();

@@ -2,7 +2,7 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export
 
 
-import module1 from "module1"
+//import module1 from "module1"
 
 
 const harry = 'potter'

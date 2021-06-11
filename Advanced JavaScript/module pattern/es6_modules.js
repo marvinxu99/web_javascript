@@ -9,7 +9,7 @@ const harry = 'potter'
 const voldemort = 'He who must not be named'
 
 export function jump() {
-	
+	console.log("Wesley jumped.")
 }
 
 export default function fight(char1, char2) {

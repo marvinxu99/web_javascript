@@ -9,8 +9,14 @@
         <script type="module" src="./es6_modules.js"></script>
 
         <script type="module">
+            
+            // figt is export default, so curly bracket is not needed.
             import fight from "./es6_modules.js";
             console.log(fight('ron', 'hedwig'));
+
+            import { jump } from "./es6_modules.js"
+            jump();
+
         </script>
     </body>
 </html>

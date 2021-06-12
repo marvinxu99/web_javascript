@@ -22,10 +22,24 @@ Promise.resolve('asyncfail')
 (async function() {
     try {
         await Promise.reject('oopsie')
-        
+
     } catch (err) {
         console.error(err)
     }
 
     console.log('This is still good!')
 })()
+
+// Exercise
+(function () {
+    try {
+      throw new Error();
+    } catch (err) {
+      var err = 5;
+      var boo = 10;
+      console.log("err1= ", err);
+    }
+    //Guess what the output is here:
+    console.log("err2 = ", err);
+    console.log("boo=", boo);
+  })();
